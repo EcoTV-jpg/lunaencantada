@@ -50,13 +50,15 @@ src/
               Faq, HouseRules (incl. Cleaning), FinalCta
 ```
 
-## Adding photographs
+## Photographs
 
-No property photos are in the repository yet, so every image slot renders a labelled neutral placeholder. To replace one, save the photo to `public/images/` with the filename listed in `src/data/images.ts` (for example `luna-encantada-a2-terrace.webp`) and rebuild. Then check that the alt text still describes the actual photo.
+The image manifest (`src/data/images.ts`) is built from the 33 real Luna Encantada A2 photos on the Latitud 20 listing. **`docs/photo-inventory.md`** lists what each photo shows, which ones are used, their target filenames and where each appears.
 
-- Use real photos of this property only. No stock imagery.
-- Export at about 2400px on the long edge; `next/image` serves AVIF/WebP at the right sizes.
-- The hero (`luna-encantada-a2-hero.webp`) is the only image that is preloaded.
+The photo files are not committed yet: reuse of the Latitud 20 photography must be confirmed first. Until a file exists, its slot shows a labelled placeholder. To add a photo, export the original as WebP under the filename in the manifest, save it to `public/images/` and rebuild.
+
+- Use real photos of this unit only. No stock, no AI-generated images, no other Luna Encantada units.
+- Higher-resolution originals (≥2400px on the long edge) are preferred; the web copies are ~1,180px.
+- `next/image` serves AVIF/WebP at the right sizes. Only the hero is preloaded.
 
 ## Connecting a booking system
 
@@ -80,4 +82,5 @@ These are `TODO`s in the code. The public UI leaves out anything that isn't conf
 - Cleaning: the policy for exactly 5-day stays and stays over 6 days, and whether the MXN $600 charge is optional
 - Kitchen appliances, if they should be listed individually
 - Legal pages: Rental Terms, Cancellation Policy, Privacy Policy (`legalPages` in `site.ts`). The privacy policy matters because the form collects names and emails.
-- Real photography and verified guest reviews
+- Permission to reuse the Latitud 20 photography (or the original files), plus the photo questions in `docs/photo-inventory.md`
+- Verified guest reviews

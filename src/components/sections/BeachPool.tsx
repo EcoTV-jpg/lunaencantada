@@ -18,7 +18,7 @@ const points = [
 ];
 
 export function BeachPool() {
-  const pool = resolveImage("pool");
+  const pool = resolveImage("infinity-pool");
   const beach = resolveImage("beach");
 
   return (

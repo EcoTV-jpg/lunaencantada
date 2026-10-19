@@ -1,9 +1,12 @@
 import { fullAddress, property } from "@/data/property";
+import { Photo } from "@/components/ui/Photo";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { resolveImage } from "@/lib/images";
 import { MapEmbed } from "./MapEmbed";
 
 export function Location() {
   const { address, location, coordinates } = property;
+  const building = resolveImage("building");
   const mapsUrl = coordinates
     ? `https://www.google.com/maps/search/?api=1&query=${coordinates.lat},${coordinates.lng}`
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
@@ -39,6 +42,13 @@ export function Location() {
             <br />
             {address.country}
           </address>
+
+          <figure className="reveal mt-12">
+            <div className="relative aspect-[4/3]">
+              <Photo image={building} sizes="(min-width: 1024px) 36vw, 100vw" />
+            </div>
+            <figcaption className="mt-3 text-sm text-stone">{building.caption}</figcaption>
+          </figure>
         </div>
 
         <div className="lg:col-span-7">

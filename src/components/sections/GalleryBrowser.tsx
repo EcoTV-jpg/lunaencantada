@@ -13,6 +13,9 @@ interface GalleryBrowserProps {
 
 type Filter = ImageCategory | "all";
 
+/** Photos shown before "Show all": the first three editorial rows. */
+const INITIAL_COUNT = 7;
+
 /**
  * Editorial rows: each row has its own column split so the grid never
  * reads as a uniform tile wall. Rows repeat in this order.
@@ -50,6 +53,7 @@ function toRows(images: ResolvedImage[]) {
 export function GalleryBrowser({ images, categories }: GalleryBrowserProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const [active, setActive] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
 
@@ -57,7 +61,10 @@ export function GalleryBrowser({ images, categories }: GalleryBrowserProps) {
     () => (filter === "all" ? images : images.filter((img) => img.category === filter)),
     [filter, images],
   );
-  const rows = useMemo(() => toRows(visible), [visible]);
+  const collapsed = filter === "all" && !expanded && visible.length > INITIAL_COUNT;
+  const shown = collapsed ? visible.slice(0, INITIAL_COUNT) : visible;
+  const rows = toRows(shown);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const open = (index: number, trigger: HTMLElement) => {
     triggerRef.current = trigger;
@@ -122,10 +129,10 @@ export function GalleryBrowser({ images, categories }: GalleryBrowserProps) {
       </div>
 
       <p className="sr-only" aria-live="polite">
-        {visible.length} {visible.length === 1 ? "photo" : "photos"} shown
+        {shown.length} of {visible.length} {visible.length === 1 ? "photo" : "photos"} shown
       </p>
 
-      <div className="mt-8 flex flex-col gap-3 md:gap-4">
+      <div ref={gridRef} className="mt-8 flex flex-col gap-3 md:gap-4">
         {rows.map((row, r) => (
           <div key={`${filter}-${r}`} className={`grid grid-cols-2 gap-3 md:grid-cols-12 md:gap-4 ${row.height}`}>
             {row.items.map(({ image, index, col }, k) => {
@@ -134,6 +141,7 @@ export function GalleryBrowser({ images, categories }: GalleryBrowserProps) {
                 <button
                   key={image.id}
                   type="button"
+                  data-index={index}
                   onClick={(e) => open(index, e.currentTarget)}
                   aria-label={`Open photo: ${image.caption}`}
                   className={`group relative block overflow-hidden bg-shell ${col} ${
@@ -152,6 +160,24 @@ export function GalleryBrowser({ images, categories }: GalleryBrowserProps) {
           </div>
         ))}
       </div>
+
+      {collapsed && (
+        <div className="mt-10 flex justify-center">
+          <button
+            type="button"
+            onClick={() => {
+              setExpanded(true);
+              // Keep keyboard focus in place: move it to the first newly revealed photo.
+              requestAnimationFrame(() =>
+                gridRef.current?.querySelector<HTMLElement>(`[data-index="${INITIAL_COUNT}"]`)?.focus(),
+              );
+            }}
+            className="inline-flex min-h-12 items-center gap-3 border border-ink/25 px-7 text-[0.9375rem] font-medium text-ink transition-colors hover:border-ink"
+          >
+            Show all {visible.length} photos
+          </button>
+        </div>
+      )}
 
       <dialog
         ref={dialogRef}

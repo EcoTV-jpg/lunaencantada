@@ -31,6 +31,10 @@ export function buildStructuredData() {
     .flatMap((g) => g.items)
     .map((item) => ({ "@type": "LocationFeatureSpecification", name: item.label, value: true }));
 
+  const realImages = propertyImages.map((img) => resolveImage(img.id)).filter((img) => img.available);
+  const imageUrls = realImages.map((img) => `${siteConfig.url}${img.src}`);
+  const vacationRentalReady = coordinates !== null && realImages.length >= 8;
+
   const accommodation = {
     "@type": "Apartment",
     "@id": placeId,
@@ -48,10 +52,9 @@ export function buildStructuredData() {
     ],
     petsAllowed: stay.petsAllowed,
     amenityFeature,
+    ...(imageUrls.length > 0 ? { image: imageUrls } : {}),
   };
 
-  const realImages = propertyImages.map((img) => resolveImage(img.id)).filter((img) => img.available);
-  const vacationRentalReady = coordinates !== null && realImages.length >= 8;
 
   const entity = vacationRentalReady
     ? {
@@ -65,7 +68,7 @@ export function buildStructuredData() {
         longitude: coordinates!.lng,
         checkinTime: stay.checkInTime,
         checkoutTime: stay.checkOutTime,
-        image: realImages.map((img) => `${siteConfig.url}${img.src}`),
+        image: imageUrls,
         containsPlace: accommodation,
       }
     : accommodation;

@@ -7,6 +7,7 @@ export interface PhotoData {
   caption: string;
   tone: PlaceholderTone;
   available: boolean;
+  focus?: string;
 }
 
 interface PhotoProps {
@@ -39,6 +40,7 @@ export function Photo({ image, sizes, preload, className = "", imageClassName = 
         loading={preload ? "eager" : "lazy"}
         quality={preload ? 85 : 75}
         className={`object-cover ${imageClassName} ${className}`}
+        style={image.focus ? { objectPosition: image.focus } : undefined}
       />
     );
   }

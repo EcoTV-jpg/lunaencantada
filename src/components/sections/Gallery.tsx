@@ -13,7 +13,7 @@ export function Gallery() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading id="photos-title" eyebrow="Photos" title="The Condo in Photos" />
           <p className="max-w-[24rem] text-stone">
-            The ocean-view terrace, the living spaces, all three bedrooms, the shared infinity pool and the beach.
+            The infinity pool and beach, the living spaces, all three bedrooms, the bathrooms and the private terrace.
           </p>
         </div>
         <GalleryBrowser images={images} categories={categories} />

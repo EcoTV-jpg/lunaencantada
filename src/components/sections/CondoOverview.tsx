@@ -5,7 +5,7 @@ import { numberWord } from "@/lib/format";
 import { resolveImage } from "@/lib/images";
 
 export function CondoOverview() {
-  const living = resolveImage("living-room");
+  const living = resolveImage("open-plan-living");
   const kitchen = resolveImage("kitchen");
   const { capacity, address } = property;
 

@@ -20,6 +20,6 @@ export function resolveImage(id: string): ResolvedImage {
 }
 
 export function resolveGalleryImages(): ResolvedImage[] {
-  return propertyImages.filter((img) => img.gallery).map(resolve);
+  return propertyImages.map(resolve);
 }
 

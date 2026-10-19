@@ -68,9 +68,9 @@ export const property = {
   },
 
   bedrooms: [
-    { name: "Bedroom 1", bed: "King bed", imageId: "primary-bedroom" },
-    { name: "Bedroom 2", bed: "Queen bed", imageId: "bedroom-2" },
-    { name: "Bedroom 3", bed: "Queen bed", imageId: "bedroom-3" },
+    { name: "Bedroom 1", bed: "King bed", imageId: "bedroom-king" },
+    { name: "Bedroom 2", bed: "Queen bed", imageId: "bedroom-queen" },
+    { name: "Bedroom 3", bed: "Queen bed", imageId: "bedroom-queen-2" },
   ] satisfies readonly Bedroom[],
 
   features: {
