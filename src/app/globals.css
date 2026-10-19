@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Caribbean Coastal Editorial — design tokens
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #16343a; /* Ocean Ink — headings, dark sections */
+  --color-teal: #2e7777; /* Caribbean Teal — primary action */
+  --color-teal-deep: #245f5f; /* hover/pressed state of teal */
+  --color-mist: #dcebe7; /* Sea Mist — sparing accent */
+  --color-sand: #e7d7bf; /* Warm Sand — sparing accent */
+  --color-shell: #f5f0e8; /* Shell — alternate surface */
+  --color-paper: #fbfaf7; /* Warm White — page background */
+  --color-charcoal: #272b2b; /* Body text */
+  --color-stone: #5b6262; /* Secondary text (6:1 on paper) */
+  --color-line: #d9d4ca; /* Hairlines on light surfaces */
+  --color-line-dark: #2f4f55; /* Hairlines on Ocean Ink */
+  --color-foam: #b9cfcb; /* Secondary text on Ocean Ink */
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-xs: 2px;
+
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Cormorant defaults to old-style figures; facts and prices read better lining. */
+  h1,
+  h2,
+  h3,
+  .font-serif {
+    font-variant-numeric: lining-nums proportional-nums;
+  }
+
+  ::selection {
+    background: var(--color-mist);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-sand);
+  }
+
+  /* Native date inputs: keep the platform picker, align the type. */
+  input[type="date"] {
+    min-height: 3rem;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Utilities
+   ------------------------------------------------------------------ */
+@utility container-page {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 3.5rem;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color 200ms var(--ease-calm);
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion — restrained, CSS-only, never hides content when unsupported
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Lightbox dialog */
+dialog.lightbox {
+  max-width: 100vw;
+  max-height: 100dvh;
+}
+dialog.lightbox::backdrop {
+  background: rgb(14 32 36 / 0.94);
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.lightbox[open] {
+    animation: fade-in 220ms var(--ease-calm);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* FAQ accordion: animate the answer height where supported. */
+@supports (interpolate-size: allow-keywords) {
+  .faq-item {
+    interpolate-size: allow-keywords;
+  }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 260ms var(--ease-calm),
+      content-visibility 260ms allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}

@@ -1,0 +1,83 @@
+# Luna Encantada A2
+
+The official one-page website for **Luna Encantada A2**, a three-bedroom beachfront condominium in Centro, Playa del Carmen, Quintana Roo, Mexico.
+
+Built with Next.js (App Router), TypeScript and Tailwind CSS. Pages are statically rendered; client JavaScript is limited to the mobile menu, gallery/lightbox, availability form, sticky mobile CTA and a small analytics listener.
+
+## Getting started
+
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # production build
+npm run lint
+npm run typecheck
+```
+
+Copy `.env.example` to `.env.local` and fill in the values.
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin (e.g. `https://example.com`). Used for canonical, Open Graph, sitemap, robots and JSON-LD. **Required before launch.** |
+| `INQUIRY_WEBHOOK_URL` | Endpoint that receives availability inquiries as a JSON `POST`. Without it, inquiries are logged in development and **refused in production**. |
+| `INQUIRY_WEBHOOK_SECRET` | Optional; sent as the `X-Inquiry-Secret` header. |
+
+## Where things live
+
+```
+src/
+  data/
+    property.ts   ← THE truth registry. Every fact on the site comes from here.
+    images.ts     ← Image manifest (filenames, alt text, categories)
+    faq.ts        ← FAQ, with answers derived from property.ts
+    reviews.ts    ← Verified reviews only (empty → section hidden)
+    site.ts       ← Site URL, navigation, legal pages
+  lib/
+    booking/
+      types.ts       ← Booking domain model (PricingQuote, Tax, SecurityDeposit…)
+      provider.ts    ← BookingProvider interface + inquiry-only implementation
+      validation.ts  ← Shared client/server validation
+    analytics.ts       ← track() event hooks (no library installed)
+    structured-data.ts ← JSON-LD from verified, visible facts only
+    images.ts          ← Detects which photos exist in /public at build time
+  app/
+    actions/inquiry.ts ← Server action behind the availability form
+    layout.tsx, page.tsx, robots.ts, sitemap.ts, opengraph-image.tsx
+  components/
+    layout/   Header, MobileMenu, Footer, StickyCta, AnalyticsListener
+    sections/ Hero, PropertyFacts, Gallery, CondoOverview, Bedrooms, Amenities,
+              BeachPool, Location, Nearby, GettingHere, Availability, Reviews,
+              Faq, HouseRules (incl. Cleaning), FinalCta
+```
+
+## Adding photographs
+
+No property photos are in the repository yet, so every image slot renders a labelled neutral placeholder. To replace one, save the photo to `public/images/` with the filename listed in `src/data/images.ts` (for example `luna-encantada-a2-terrace.webp`) and rebuild. Then check that the alt text still describes the actual photo.
+
+- Use real photos of this property only. No stock imagery.
+- Export at about 2400px on the long edge; `next/image` serves AVIF/WebP at the right sizes.
+- The hero (`luna-encantada-a2-hero.webp`) is the only image that is preloaded.
+
+## Connecting a booking system
+
+The availability UI only talks to the `BookingProvider` interface in `src/lib/booking/provider.ts`. To add iCal, a PMS, a channel manager or a booking engine, implement that interface and return it from `getBookingProvider()` (selected by the `BOOKING_PROVIDER` env var). Nothing in the page has to change.
+
+The default provider never fabricates availability: `checkAvailability` returns `status: "unknown"` and inquiries are forwarded to `INQUIRY_WEBHOOK_URL`.
+
+## Analytics
+
+`track()` in `src/lib/analytics.ts` pushes to `window.dataLayer` when a tag manager is present and dispatches a `luna:analytics` DOM event. Events: `view_availability`, `select_check_in`, `select_check_out`, `select_guests`, `submit_availability`, `view_gallery`, `open_location`, `contact_click`. Server-rendered links can fire events with `data-track="…"`.
+
+## Open items to confirm with the owner
+
+These are `TODO`s in the code. The public UI leaves out anything that isn't confirmed.
+
+- Final domain (`NEXT_PUBLIC_SITE_URL`)
+- Where inquiries go (`INQUIRY_WEBHOOK_URL`) and public contact details (`property.contact`)
+- Exact coordinates. Setting them enables the on-demand map and `VacationRental` structured data (that also needs at least 8 real photos).
+- Taxes, security deposit, cancellation/refund policy, payment methods
+- Smoking and parties/events rules
+- Cleaning: the policy for exactly 5-day stays and stays over 6 days, and whether the MXN $600 charge is optional
+- Kitchen appliances, if they should be listed individually
+- Legal pages: Rental Terms, Cancellation Policy, Privacy Policy (`legalPages` in `site.ts`). The privacy policy matters because the form collects names and emails.
+- Real photography and verified guest reviews
