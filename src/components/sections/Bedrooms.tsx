@@ -6,7 +6,7 @@ import { resolveImage } from "@/lib/images";
 
 export function Bedrooms() {
   const [first, ...rest] = property.bedrooms;
-  const bathroom = resolveImage("bathroom");
+  const bathrooms = [resolveImage("bathroom"), resolveImage("bathroom-2")];
   const { capacity } = property;
 
   return (
@@ -46,8 +46,13 @@ export function Bedrooms() {
               {property.name} has {numberWord(capacity.bathrooms)} bathrooms.
             </p>
           </div>
-          <div className="relative aspect-[16/9] md:col-span-7">
-            <Photo image={bathroom} sizes="(min-width: 768px) 58vw, 100vw" />
+          {/* Source photos are portrait and ~520px wide, so they stay at a modest size. */}
+          <div className="grid grid-cols-2 gap-3 md:col-span-7 md:gap-4 lg:col-span-6 lg:col-start-7">
+            {bathrooms.map((bath) => (
+              <div key={bath.id} className="reveal relative aspect-[2/3]">
+                <Photo image={bath} sizes="(min-width: 1024px) 24vw, (min-width: 768px) 28vw, 50vw" />
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -43,16 +43,18 @@ export function Location() {
             {address.country}
           </address>
 
-          <figure className="reveal mt-12">
-            <div className="relative aspect-[4/3]">
-              <Photo image={building} sizes="(min-width: 1024px) 36vw, 100vw" />
-            </div>
-            <figcaption className="mt-3 text-sm text-stone">{building.caption}</figcaption>
-          </figure>
+          <div className="mt-6">
+            <MapEmbed coordinates={coordinates} mapsUrl={mapsUrl} label={fullAddress} />
+          </div>
         </div>
 
         <div className="lg:col-span-7">
-          <MapEmbed coordinates={coordinates} mapsUrl={mapsUrl} label={fullAddress} />
+          <figure className="reveal">
+            <div className="relative aspect-[3/2]">
+              <Photo image={building} sizes="(min-width: 1024px) 55vw, 100vw" />
+            </div>
+            <figcaption className="mt-3 text-sm text-stone">{building.caption}</figcaption>
+          </figure>
 
           <dl className="mt-10 divide-y divide-line border-y border-line">
             {facts.map((fact) => (

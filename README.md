@@ -54,7 +54,7 @@ src/
 
 The image manifest (`src/data/images.ts`) is built from the 33 real Luna Encantada A2 photos on the Latitud 20 listing. **`docs/photo-inventory.md`** lists what each photo shows, which ones are used, their target filenames and where each appears.
 
-The photo files are not committed yet: reuse of the Latitud 20 photography must be confirmed first. Until a file exists, its slot shows a labelled placeholder. To add a photo, export the original as WebP under the filename in the manifest, save it to `public/images/` and rebuild.
+The selected photos are in `public/images/`. Each section has its own photo and the gallery shows the rest, so no photo repeats. To replace a photo (for example with a higher-resolution original), overwrite the file with the same name and rebuild. A slot whose file is missing falls back to a labelled placeholder.
 
 - Use real photos of this unit only. No stock, no AI-generated images, no other Luna Encantada units.
 - Higher-resolution originals (≥2400px on the long edge) are preferred; the web copies are ~1,180px.
@@ -82,5 +82,5 @@ These are `TODO`s in the code. The public UI leaves out anything that isn't conf
 - Cleaning: the policy for exactly 5-day stays and stays over 6 days, and whether the MXN $600 charge is optional
 - Kitchen appliances, if they should be listed individually
 - Legal pages: Rental Terms, Cancellation Policy, Privacy Policy (`legalPages` in `site.ts`). The privacy policy matters because the form collects names and emails.
-- Permission to reuse the Latitud 20 photography (or the original files), plus the photo questions in `docs/photo-inventory.md`
+- Written permission for the Latitud 20 photography (or the photographer's high-resolution originals), plus the photo questions in `docs/photo-inventory.md`
 - Verified guest reviews

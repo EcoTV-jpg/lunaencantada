@@ -10,8 +10,9 @@ export function Hero() {
 
   return (
     <section aria-labelledby="hero-title" className="relative">
-      <div className="lg:grid lg:min-h-[min(calc(100svh-5rem),56rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)]">
-        <div className="container-page flex flex-col justify-center pt-12 pb-12 sm:pt-16 lg:mr-0 lg:max-w-none lg:py-20 lg:pr-16 lg:pl-[max(3.5rem,calc((100vw-84rem)/2+3.5rem))]">
+      {/* Photo leads on small screens (visual order only; the H1 stays first in the DOM). */}
+      <div className="flex flex-col lg:grid lg:min-h-[min(calc(100svh-5rem),56rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)]">
+        <div className="container-page flex flex-col justify-center pt-10 pb-14 sm:pt-14 lg:mr-0 lg:max-w-none lg:py-20 lg:pr-16 lg:pl-[max(3.5rem,calc((100vw-84rem)/2+3.5rem))]">
           <p className="eyebrow text-teal">Playa del Carmen · Mexico</p>
 
           <h1 id="hero-title" className="mt-6 lg:mt-8">
@@ -43,7 +44,7 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="relative aspect-[4/5] sm:aspect-[3/2] lg:aspect-auto">
+        <div className="relative order-first aspect-[5/4] sm:aspect-[16/9] lg:order-none lg:aspect-auto">
           <Photo image={image} sizes="(min-width: 1024px) 53vw, 100vw" preload />
         </div>
       </div>

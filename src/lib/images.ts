@@ -2,7 +2,7 @@ import "server-only";
 
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { getImage, propertyImages, type PropertyImage } from "@/data/images";
+import { getImage, propertyImages, sectionImageIds, type PropertyImage } from "@/data/images";
 
 export interface ResolvedImage extends PropertyImage {
   /** True when the photograph exists in /public. Otherwise a placeholder renders. */
@@ -20,6 +20,6 @@ export function resolveImage(id: string): ResolvedImage {
 }
 
 export function resolveGalleryImages(): ResolvedImage[] {
-  return propertyImages.map(resolve);
+  return propertyImages.filter((img) => !sectionImageIds.has(img.id)).map(resolve);
 }
 

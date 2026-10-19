@@ -3,12 +3,11 @@
  * published on the Latitud 20 listing (see docs/photo-inventory.md).
  *
  * Each entry names the original asset (`source`) and the optimized file
- * the site expects in `public/images/`. A photo appears automatically once
- * its file exists; until then a labelled placeholder holds the slot.
+ * in `public/images/`. If a file is missing, a labelled placeholder holds
+ * the slot.
  *
- * TODO(owner): confirm we have permission to reuse the Latitud 20
- * photography (or supply the photographer's originals, ideally ≥2400px)
- * before adding the files.
+ * TODO(owner): keep written permission for the Latitud 20 photography on
+ * file, and replace with the photographer's originals (≥2400px) if possible.
  *
  * Alt text describes only what is visible in each photo. No stock or
  * AI-generated imagery, and no photos of other Luna Encantada units.
@@ -59,7 +58,7 @@ const LAT20 =
 
 const img = (name: string) => `/images/luna-encantada-a2-${name}.webp`;
 
-/** Ordered as the gallery shows them: strongest images first. */
+/** Gallery order follows this list: strongest images first. */
 export const propertyImages: PropertyImage[] = [
   {
     id: "hero",
@@ -353,6 +352,26 @@ export const propertyImages: PropertyImage[] = [
     sourceSize: [519, 789],
   },
 ];
+
+/**
+ * Photos placed in a page section. The gallery shows only the rest, so no
+ * photo appears twice on the page.
+ */
+export const sectionImageIds = new Set([
+  "hero", // Hero
+  "open-plan-living", // The Condo
+  "kitchen", // The Condo
+  "kitchen-island-teal", // Amenities
+  "bedroom-king", // Bedroom 1
+  "bedroom-queen", // Bedroom 2
+  "bedroom-queen-2", // Bedroom 3
+  "bathroom", // Bathrooms
+  "bathroom-2", // Bathrooms
+  "infinity-pool", // Beach & Pool
+  "beach", // Beach & Pool
+  "building", // Location
+  "garden-fountain", // Final call to action
+]);
 
 export function getImage(id: string): PropertyImage {
   const image = propertyImages.find((i) => i.id === id);

@@ -10,8 +10,8 @@ interface MapEmbedProps {
 }
 
 /**
- * Without verified coordinates this renders an address panel and an
- * outbound maps link — never an approximate pin. Once `property.coordinates`
+ * Without verified coordinates this renders only an outbound maps link
+ * for the street address — never an approximate pin. Once `property.coordinates`
  * is set, visitors can load an OpenStreetMap embed on demand, so no
  * third-party map code runs until requested.
  */
@@ -49,38 +49,21 @@ export function MapEmbed({ coordinates, mapsUrl, label }: MapEmbedProps) {
     );
   }
 
+  if (!coordinates) return link;
+
   return (
-    <div className="relative flex aspect-[16/10] flex-col justify-between overflow-hidden bg-mist p-6 sm:p-10">
-      {/* Abstract coastline — decorative, not a map. */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 size-full text-ink/15"
-        viewBox="0 0 400 250"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
+    <div className="flex flex-wrap items-center gap-x-6">
+      {link}
+      <button
+        type="button"
+        onClick={() => {
+          setLoaded(true);
+          track("open_location", { provider: "embed" });
+        }}
+        className="link-underline min-h-11 text-sm font-medium text-ink"
       >
-        <path d="M250 -10 C 268 60, 300 120, 318 170 S 360 240, 380 270" stroke="currentColor" strokeWidth="1" />
-        <path d="M262 -10 C 280 60, 312 120, 330 170 S 372 240, 392 270" stroke="currentColor" strokeWidth="0.5" />
-      </svg>
-      <p className="eyebrow relative text-teal">Centro · Playa del Carmen</p>
-      <div className="relative">
-        <p className="max-w-[22rem] font-serif text-[1.5rem] leading-snug text-ink">{label}</p>
-        <div className="mt-4 flex flex-wrap items-center gap-x-6">
-          {link}
-          {coordinates && (
-            <button
-              type="button"
-              onClick={() => {
-                setLoaded(true);
-                track("open_location", { provider: "embed" });
-              }}
-              className="link-underline min-h-11 text-sm font-medium text-ink"
-            >
-              Show map
-            </button>
-          )}
-        </div>
-      </div>
+        Show map
+      </button>
     </div>
   );
 }

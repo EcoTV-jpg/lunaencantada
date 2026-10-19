@@ -24,20 +24,19 @@ export function BeachPool() {
   return (
     <section id="beach" aria-labelledby="beach-title" className="on-dark bg-ink py-24 text-paper sm:py-32">
       <div className="container-page">
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
-          <SectionHeading id="beach-title" eyebrow="Beach & Pool" title="Beachfront Living" tone="dark" className="lg:col-span-5">
-            <p>Direct access to the beach, a shared infinity pool, and the ocean in view from your own terrace.</p>
-          </SectionHeading>
-          <div className="relative aspect-[3/2] lg:col-span-7">
-            <Photo image={pool} sizes="(min-width: 1024px) 58vw, 100vw" />
-          </div>
-        </div>
+        <SectionHeading id="beach-title" eyebrow="Beach & Pool" title="Beachfront Living" tone="dark">
+          <p>Direct access to the beach, a shared infinity pool, and the ocean in view from your own terrace.</p>
+        </SectionHeading>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-12">
-          <div className="relative aspect-[4/3] lg:col-span-5 lg:aspect-auto">
-            <Photo image={beach} sizes="(min-width: 1024px) 40vw, 100vw" />
+        <figure className="reveal mt-14">
+          <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9]">
+            <Photo image={pool} sizes="(min-width: 1344px) 1232px, 100vw" />
           </div>
-          <ol className="divide-y divide-line-dark border-y border-line-dark lg:col-span-7">
+          <figcaption className="mt-3 text-sm text-foam">{pool.caption}</figcaption>
+        </figure>
+
+        <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <ol className="divide-y divide-line-dark border-y border-line-dark lg:col-span-7 lg:self-center">
             {points.map((point, i) => (
               <li key={point.title} className="grid gap-2 py-7 sm:grid-cols-[4rem_1fr] sm:py-9">
                 <span aria-hidden="true" className="font-serif text-lg italic text-sand">
@@ -50,9 +49,16 @@ export function BeachPool() {
               </li>
             ))}
           </ol>
+
+          <figure className="reveal lg:col-span-5">
+            <div className="relative aspect-[4/5]">
+              <Photo image={beach} sizes="(min-width: 1024px) 40vw, 100vw" />
+            </div>
+            <figcaption className="mt-3 text-sm text-foam">{beach.caption}</figcaption>
+          </figure>
         </div>
 
-        <p className="mt-10 max-w-[40rem] text-sm text-foam">
+        <p className="mt-12 max-w-[40rem] text-sm text-foam">
           Neither the beach nor the pool is private. Sea and beach conditions on the Caribbean coast change with the
           season and the weather.
         </p>
