@@ -1,33 +1,48 @@
 import { property } from "@/data/property";
+import { Icon, type IconName } from "@/components/ui/Icon";
 
-const { capacity } = property;
+const { capacity, address, stay } = property;
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
-const facts: { value: string; label: string; wide?: boolean }[] = [
-  { value: "Beachfront", label: "Direct beach access", wide: true },
-  { value: String(capacity.bedrooms), label: "Bedrooms" },
-  { value: String(capacity.bathrooms), label: "Bathrooms" },
-  { value: String(capacity.beds), label: "Beds" },
-  { value: String(capacity.maxGuests), label: "Guests max." },
-  { value: "Infinity", label: "Shared pool" },
-  { value: "~1 min", label: "To Fifth Avenue" },
+const highlights: { icon: IconName; title: string; text: string }[] = [
+  { icon: "beach", title: "Beachfront", text: "Direct beach access from the condominium." },
+  { icon: "pool", title: "Shared infinity pool", text: "Shared by the condominium — the pool is not private." },
+  { icon: "terrace", title: "Private ocean-view terrace", text: "A private terrace with an ocean view." },
+  { icon: "walk", title: "About 1 minute to Fifth Avenue", text: "Approximately a minute on foot." },
 ];
 
+/** Overview: the at-a-glance facts, stated in text (not icons alone). */
 export function PropertyFacts() {
   return (
-    <section aria-label="Property at a glance" className="border-y border-line bg-paper">
-      <dl className="container-page grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7">
-        {facts.map((fact) => (
-          <div
-            key={fact.label}
-            className={`flex flex-col-reverse justify-end gap-1.5 border-line py-6 sm:py-8 lg:border-l lg:px-6 lg:first:border-l-0 lg:first:pl-0 ${
-              fact.wide ? "col-span-2 border-b sm:col-span-3 lg:col-span-1 lg:border-b-0" : ""
-            }`}
-          >
-            <dt className="eyebrow text-stone">{fact.label}</dt>
-            <dd className="font-serif text-[2.25rem] leading-none text-ink lg:text-[2.5rem]">{fact.value}</dd>
-          </div>
+    <section aria-labelledby="overview-title" className="pb-8">
+      <h2 id="overview-title" className="title-section">
+        Beachfront condominium in {address.area}, {address.city}
+      </h2>
+      <p className="mt-1.5 text-base text-ink">
+        {plural(capacity.maxGuests, "guest")} · {plural(capacity.bedrooms, "bedroom")} ·{" "}
+        {plural(capacity.beds, "bed")} · {plural(capacity.bathrooms, "bath")}
+      </p>
+
+      <ul className="mt-8 space-y-6 border-t border-line pt-8">
+        {highlights.map((h) => (
+          <li key={h.title} className="flex gap-6">
+            <Icon name={h.icon} className="mt-0.5 size-7" />
+            <div>
+              <p className="font-semibold">{h.title}</p>
+              <p className="text-[0.9375rem] text-muted">{h.text}</p>
+            </div>
+          </li>
         ))}
-      </dl>
+        <li className="flex gap-6">
+          <Icon name="clock" className="mt-0.5 size-7" />
+          <div>
+            <p className="font-semibold">
+              Check-in {stay.checkIn} · Check-out {stay.checkOut}
+            </p>
+            <p className="text-[0.9375rem] text-muted">No minimum stay is currently specified.</p>
+          </div>
+        </li>
+      </ul>
     </section>
   );
 }

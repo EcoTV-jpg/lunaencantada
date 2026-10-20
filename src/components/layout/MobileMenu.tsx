@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { fullAddress } from "@/data/property";
 import { navigation } from "@/data/site";
 import { buttonStyles } from "@/components/ui/ButtonLink";
+import { Icon } from "@/components/ui/Icon";
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -40,43 +41,37 @@ export function MobileMenu() {
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
+        aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((v) => !v)}
-        className="-mr-2 inline-flex min-h-11 min-w-11 items-center justify-center gap-2.5 px-2 text-sm font-medium text-ink"
+        className="inline-flex size-11 items-center justify-center rounded-full bg-faint text-ink transition-colors hover:bg-line"
       >
-        <span>{open ? "Close" : "Menu"}</span>
-        <span aria-hidden="true" className="relative block h-3 w-5">
-          <span
-            className={`absolute left-0 h-px w-5 bg-current transition-transform duration-300 ${open ? "top-1.5 rotate-45" : "top-0.5"}`}
-          />
-          <span
-            className={`absolute left-0 h-px w-5 bg-current transition-transform duration-300 ${open ? "top-1.5 -rotate-45" : "top-2.5"}`}
-          />
-        </span>
+        <Icon name={open ? "close" : "menu"} className="size-5" />
       </button>
 
       <div
         id={panelId}
         hidden={!open}
-        className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-line bg-paper"
+        className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-white md:top-20"
       >
-        <nav aria-label="Mobile" className="container-page flex min-h-full flex-col py-8">
-          <ul className="divide-y divide-line border-y border-line">
+        <nav aria-label="Mobile" className="container-page flex min-h-full flex-col py-6">
+          <ul className="divide-y divide-line">
             {navigation.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
                   onClick={() => close()}
-                  className="flex min-h-14 items-center font-serif text-[1.75rem] text-ink"
+                  className="flex min-h-14 items-center justify-between text-lg font-medium text-ink"
                 >
                   {item.label}
+                  <Icon name="chevronRight" className="size-4 text-muted" />
                 </a>
               </li>
             ))}
           </ul>
           <a href="#availability" onClick={() => close()} className={`${buttonStyles.primary} mt-8 w-full`}>
-            Check Availability
+            Check availability
           </a>
-          <p className="mt-auto pt-10 text-sm text-stone">{fullAddress}</p>
+          <p className="mt-auto pt-10 text-sm text-muted">{fullAddress}</p>
         </nav>
       </div>
     </div>

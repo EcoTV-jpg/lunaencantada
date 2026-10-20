@@ -1,52 +1,58 @@
 import { property } from "@/data/property";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Icon, type IconName } from "@/components/ui/Icon";
 
-/** House rules and cleaning, side by side. Unconfirmed rules are omitted. */
+/** "Things to know": house rules and cleaning. Unconfirmed rules are omitted. */
 export function HouseRules() {
   const { capacity, stay, cleaning } = property;
 
-  const rules = [
-    { label: "Maximum guests", value: String(capacity.maxGuests) },
-    { label: "Children", value: capacity.childrenAllowed ? "Allowed" : "Not allowed" },
-    { label: "Pets", value: stay.petsAllowed ? "Allowed" : "Not allowed" },
-    { label: "Check-in", value: stay.checkIn },
-    { label: "Check-out", value: stay.checkOut },
+  const rules: { icon: IconName; label: string; value: string }[] = [
+    { icon: "guests", label: "Maximum guests", value: String(capacity.maxGuests) },
+    { icon: "child", label: "Children", value: capacity.childrenAllowed ? "Allowed" : "Not allowed" },
+    { icon: "noPets", label: "Pets", value: stay.petsAllowed ? "Allowed" : "Not allowed" },
+    { icon: "clock", label: "Check-in", value: stay.checkIn },
+    { icon: "clock", label: "Check-out", value: stay.checkOut },
     ...(stay.smokingAllowed === null
       ? []
-      : [{ label: "Smoking", value: stay.smokingAllowed ? "Allowed" : "Not allowed" }]),
+      : [{ icon: "home" as IconName, label: "Smoking", value: stay.smokingAllowed ? "Allowed" : "Not allowed" }]),
     ...(stay.eventsAllowed === null
       ? []
-      : [{ label: "Parties & events", value: stay.eventsAllowed ? "Allowed" : "Not allowed" }]),
+      : [{ icon: "home" as IconName, label: "Parties & events", value: stay.eventsAllowed ? "Allowed" : "Not allowed" }]),
   ];
 
   return (
-    <div className="border-t border-line bg-paper py-24 sm:py-32">
-      <div className="container-page grid gap-20 lg:grid-cols-2 lg:gap-24">
+    <div className="border-t border-line py-12 md:py-16">
+      <div className="container-page grid gap-12 md:grid-cols-2 lg:gap-16">
         <section aria-labelledby="rules-title" id="house-rules">
-          <SectionHeading id="rules-title" eyebrow="Good to know" title="House Rules" />
-          <dl className="mt-10 border-t border-ink">
+          <h2 id="rules-title" className="title-section">
+            House Rules
+          </h2>
+          <dl className="mt-6 space-y-4">
             {rules.map((rule) => (
-              <div key={rule.label} className="flex items-baseline justify-between gap-6 border-b border-line py-4">
-                <dt className="text-stone">{rule.label}</dt>
-                <dd className="font-serif text-[1.375rem] text-ink">{rule.value}</dd>
+              <div key={rule.label} className="flex items-center gap-4">
+                <Icon name={rule.icon} />
+                <dt className="text-[0.9375rem]">{rule.label}</dt>
+                <dd className="ml-auto text-[0.9375rem] font-semibold">{rule.value}</dd>
               </div>
             ))}
           </dl>
         </section>
 
         <section aria-labelledby="cleaning-title" id="cleaning">
-          <SectionHeading id="cleaning-title" eyebrow="Housekeeping" title="Cleaning" />
-          <dl className="mt-10 border-t border-ink">
+          <h2 id="cleaning-title" className="title-section">
+            Cleaning
+          </h2>
+          <dl className="mt-6 space-y-4">
             {cleaning.rules.map((rule) => (
-              <div key={rule.label} className="border-b border-line py-5">
-                <dt className="eyebrow text-teal">{rule.label}</dt>
-                <dd className="mt-2 font-serif text-[1.375rem] leading-snug text-ink">{rule.description}</dd>
+              <div key={rule.label} className="flex gap-4">
+                <Icon name="sparkle" />
+                <div>
+                  <dt className="text-[0.9375rem] font-semibold">{rule.label}</dt>
+                  <dd className="text-[0.9375rem] text-muted">{rule.description}</dd>
+                </div>
               </div>
             ))}
           </dl>
-          <p className="mt-6 max-w-[30rem] text-sm text-stone">
-            Cleaning for your exact dates is confirmed in the reply to your inquiry.
-          </p>
+          <p className="mt-6 text-sm text-muted">Cleaning for your exact dates is confirmed in the reply to your inquiry.</p>
         </section>
       </div>
     </div>

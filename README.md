@@ -4,6 +4,15 @@ The official one-page website for **Luna Encantada A2**, a three-bedroom beachfr
 
 Built with Next.js (App Router), TypeScript and Tailwind CSS. Pages are statically rendered; client JavaScript is limited to the mobile menu, gallery/lightbox, availability form, sticky mobile CTA and a small analytics listener.
 
+## Design
+
+The site uses a white-canvas, photograph-first listing style. Tokens live in `src/app/globals.css` (`@theme`):
+
+- **Type:** DM Sans only (400–700), compact sizes; section titles 22–26px/600 with tight tracking.
+- **Colour:** near-monochrome (`ink` #222, `muted` #6a6a6a, `line` #ebebeb, `faint` #f7f7f7). **Teal (#2E7777) is the single accent**, used for primary actions and the wordmark only.
+- **Shape:** 12–16px rounded photos and cards, 8px buttons and inputs, pill filter chips. Shadows only on floating elements (booking card, "Show all photos").
+- **Layout:** title and a five-photo grid, then a two-column body whose right column holds the booking card (sticky on desktop). Below that come full-width sections separated by hairlines. Outline icons are in `src/components/ui/Icon.tsx`.
+
 ## Getting started
 
 ```bash

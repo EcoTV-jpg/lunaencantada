@@ -48,29 +48,26 @@ export function Photo({ image, sizes, preload, className = "", imageClassName = 
   return <PhotoPlaceholder image={image} className={className} compact={compact} />;
 }
 
-const tones: Record<PlaceholderTone, { sky: string; ground: string; horizon: string; text: string }> = {
-  horizon: { sky: "bg-mist", ground: "bg-sand/70", horizon: "top-[58%]", text: "text-ink/70" },
-  water: { sky: "bg-[#cfe3de]", ground: "bg-[#b8d5cf]", horizon: "top-[46%]", text: "text-ink/70" },
-  sand: { sky: "bg-[#f0e9de]", ground: "bg-sand", horizon: "top-[64%]", text: "text-ink/70" },
-  interior: { sky: "bg-[#ede6da]", ground: "bg-[#e3d9c8]", horizon: "top-[72%]", text: "text-ink/70" },
+const tones: Record<PlaceholderTone, string> = {
+  horizon: "bg-faint",
+  water: "bg-faint",
+  sand: "bg-faint",
+  interior: "bg-faint",
 };
 
 function PhotoPlaceholder({ image, className, compact }: { image: PhotoData; className: string; compact?: boolean }) {
-  const tone = tones[image.tone];
   return (
     <div
       role="img"
       aria-label={`Photo coming soon: ${image.alt}`}
-      className={`absolute inset-0 overflow-hidden ${tone.sky} ${className}`}
+      className={`absolute inset-0 flex items-end overflow-hidden ${tones[image.tone]} ${className}`}
       data-placeholder={image.src}
     >
-      <div className={`absolute inset-x-0 bottom-0 ${tone.horizon} ${tone.ground}`} />
-      <div className={`absolute inset-x-0 ${tone.horizon} h-px bg-ink/15`} />
-      <div className={`absolute ${compact ? "bottom-3 left-3" : "bottom-5 left-5"} ${tone.text}`} aria-hidden="true">
-        <p className="eyebrow !text-[0.625rem]">Photo coming soon</p>
-        <p className={`mt-1 font-serif italic leading-snug ${compact ? "text-base" : "text-lg"}`}>{image.caption}</p>
+      <div className={compact ? "p-3" : "p-5"} aria-hidden="true">
+        <p className="text-xs font-semibold text-muted">Photo coming soon</p>
+        <p className={`mt-0.5 text-ink ${compact ? "text-sm" : "text-base"}`}>{image.caption}</p>
         {process.env.NODE_ENV === "development" && (
-          <p className="mt-1 font-mono text-[10px] opacity-70">{image.src}</p>
+          <p className="mt-1 font-mono text-[10px] text-muted">{image.src}</p>
         )}
       </div>
     </div>

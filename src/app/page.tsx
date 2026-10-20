@@ -28,7 +28,7 @@ export default function HomePage() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-ink focus:px-4 focus:py-3 focus:text-paper"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-sm focus:bg-ink focus:px-4 focus:py-3 focus:text-white"
       >
         Skip to content
       </a>
@@ -36,23 +36,35 @@ export default function HomePage() {
       <Header />
       <main id="main">
         <Hero />
-        <PropertyFacts />
+
+        {/* Listing body: details on the left, booking card on the right (sticky on desktop). */}
+        <div className="container-page mt-8 grid gap-x-16 md:mt-10 lg:grid-cols-[minmax(0,1fr)_23rem]">
+          <div className="min-w-0">
+            <PropertyFacts />
+            <CondoOverview />
+            <Bedrooms />
+            <Amenities />
+            <BeachPool />
+          </div>
+          <div className="relative pb-12 lg:row-span-1 lg:pb-12">
+            <Availability />
+          </div>
+        </div>
+
         <Gallery />
-        <CondoOverview />
-        <Bedrooms />
-        <Amenities />
-        <BeachPool />
         <Location />
         <Nearby />
         <GettingHere />
-        <Availability />
         <Reviews />
         <Faq />
         <HouseRules />
         <FinalCta />
       </main>
       <Footer />
-      <StickyCta priceLabel={formatAmount(property.pricing.baseNightlyRate)} />
+      <StickyCta
+        priceLabel={formatAmount(property.pricing.baseNightlyRate)}
+        currency={property.pricing.baseNightlyRate.currency}
+      />
       <AnalyticsListener />
       <script
         type="application/ld+json"

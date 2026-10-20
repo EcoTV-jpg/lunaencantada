@@ -21,25 +21,25 @@ Every source URL is in the `source` field of `src/data/images.ts`.
 
 | # | What the photo shows | Size (px) | Decision | Target `<name>` | Used in |
 | --- | --- | --- | --- | --- | --- |
-| 11 | Infinity pool between palms and buildings, opening onto the sea | 1143×762 | **Use (hero)** | `hero` | Hero |
-| 14 | Infinity-pool edge, loungers, palms, sea beyond | 1146×763 | Use | `infinity-pool` | Beach & Pool (wide) |
-| 10 | Pool in the courtyard, loungers, terracotta buildings | 1164×772 | Use | `pool-courtyard` | Gallery |
+| 11 | Infinity pool between palms and buildings, opening onto the sea | 1143×762 | **Use (hero)** | `hero` | Hero grid (main) |
+| 14 | Infinity-pool edge, loungers, palms, sea beyond | 1146×763 | Use | `infinity-pool` | Beach & Pool |
+| 10 | Pool in the courtyard, loungers, terracotta buildings | 1164×772 | Use | `pool-courtyard` | Hero grid |
 | 02 | Sun loungers and umbrellas on a white-sand beach with palms and buildings (two guests in frame) | 1540×1021 | Use | `beach` | Beach & Pool |
 | 13 | Building with the "Luna Encantada" sign, garden fountain, sea on the left | 1163×773 | Use | `building` | Location |
 | 12 | Garden fountain between buildings, infinity pool and sea behind | 1141×765 | Use | `garden-fountain` | Final call to action |
 | 03 | Open-plan living / dining / kitchen | 1175×779 | Use | `open-plan-living` | The Condo |
-| 01 | Navy sectional sofa and coffee table beside sliding doors to the terrace | 1165×778 | Use | `living-room` | Gallery |
+| 01 | Navy sectional sofa and coffee table beside sliding doors to the terrace | 1165×778 | Use | `living-room` | Hero grid |
 | 30 | Navy sectional sofa under a sea-turtle painting | 1178×787 | Use | `living-room-sofa` | Gallery |
 | 23 | Sitting area with wall TV, white armchair, blue-and-gold art | 1181×789 | Use | `sitting-area` | Gallery |
 | 07 | Round glass dining table, bedroom visible through doorway | 1128×750 | Use | `dining-area` | Gallery |
 | 20 | Dining table in front of kitchen and breakfast bar | 1179×787 | Use | `dining-kitchen` | Gallery |
 | 08 | Console with stools, view across living/dining to terrace | 1155×772 | Use | `entry-living` | Gallery |
 | 27 | Front door with stained-glass panel, console, mirror | 1179×784 | Use | `entry` | Gallery |
-| 05 | Kitchen: white cabinets, blue mosaic backsplash, cooktop, oven | 1144×762 | Use | `kitchen` | The Condo (inset) |
+| 05 | Kitchen: white cabinets, blue mosaic backsplash, cooktop, oven | 1144×762 | Use | `kitchen` | The Condo |
 | 21 | Kitchen island with stools beside the front door | 1184×791 | Use | `kitchen-island` | Gallery |
-| 33 | Teal kitchen island, refrigerator, coffee maker | 1181×785 | Use | `kitchen-island-teal` | Amenities |
+| 33 | Teal kitchen island, refrigerator, coffee maker | 1181×785 | Use | `kitchen-island-teal` | Gallery |
 | 09 | Bedroom: large dark-wood bed, two lamps, tree painting | 1160×768 | Use | `bedroom-king` | Bedroom 1 |
-| 26 | Same bedroom: dark-wood bed, A/C unit, closet doors | 1179×787 | Use | `bedroom-king-closet` | Gallery |
+| 26 | Same bedroom: dark-wood bed, A/C unit, closet doors | 1179×787 | Use | `bedroom-king-closet` | Hero grid |
 | 24 | Same bedroom as 09, straight-on | 1180×784 | Skip: near-duplicate of 09 | — | — |
 | 22 | Bedroom with TV console, armchairs, sliding doors to a terrace | 1180×784 | Use | `bedroom-terrace-door` | Gallery |
 | 04 | Bedroom: mint wall, flower painting, woven bench | 1135×757 | Use | `bedroom-queen` | Bedroom 2 |
@@ -51,11 +51,11 @@ Every source URL is in the `source` field of `src/data/images.ts`.
 | 17 | Same bedroom as 15, wardrobe with luggage on top | 1180×787 | Skip: clutter in frame | — | — |
 | 06 | Bathroom: long wooden vanity, mirror, glass shower (portrait) | 515×782 | Use (low-res) | `bathroom` | Bathrooms |
 | 28 | Bathroom vanity with stone top and mirror (portrait) | 519×789 | Use (low-res) | `bathroom-2` | Bathrooms |
-| 18 | Covered terrace with dining table, overlooking pool and courtyard | 1184×788 | Use | `terrace` | Gallery |
+| 18 | Covered terrace with dining table, overlooking pool and courtyard | 1184×788 | Use | `terrace` | Hero grid |
 | 29 | Terrace with lounger and chair, overlooking courtyard buildings | 1182×787 | Use | `terrace-lounger` | Gallery |
 | 32 | Terrace table and chairs beside the sliding doors | 1183×788 | Use | `terrace-table` | Gallery |
 
-**29 photos used, 4 skipped.** No photo appears twice on the page: 13 are placed in sections, and the gallery holds the other 16 (it shows 7 first, then "Show all 16 photos").
+**29 photos used, 4 skipped.** No photo appears twice on the page: 16 are placed in the hero grid and sections, and the gallery holds the other 13 (8 shown first, then "Show all 13 photos").
 
 ### Why the hero is #11
 

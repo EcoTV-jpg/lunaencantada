@@ -1,40 +1,44 @@
 import { property } from "@/data/property";
-import { Photo } from "@/components/ui/Photo";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { resolveImage } from "@/lib/images";
+
+/** Icons for the confirmed amenities, keyed by their label in the registry. */
+const icons: Record<string, IconName> = {
+  "Wi-Fi": "wifi",
+  "Air conditioning": "snowflake",
+  Washer: "washer",
+  Dryer: "dryer",
+  "Fully equipped kitchen": "kitchen",
+  "Direct beach access": "beach",
+  "Private ocean-view terrace": "terrace",
+  "Shared infinity pool": "pool",
+  Elevator: "elevator",
+  "Secure on-property parking": "car",
+  "24-hour security": "shield",
+};
 
 export function Amenities() {
-  const kitchen = resolveImage("kitchen-island-teal");
   return (
-    <section id="amenities" aria-labelledby="amenities-title" className="border-t border-line py-24 sm:py-32">
-      <div className="container-page grid gap-14 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <SectionHeading id="amenities-title" eyebrow="Amenities" title="Amenities">
-            <p>The essentials, grouped. If there’s something specific you need, mention it in your inquiry.</p>
-          </SectionHeading>
-          <figure className="reveal mt-10">
-            <div className="relative aspect-[4/3] lg:aspect-[5/6]">
-              <Photo image={kitchen} sizes="(min-width: 1024px) 30vw, 100vw" />
-            </div>
-            <figcaption className="mt-3 text-sm text-stone">{kitchen.caption}</figcaption>
-          </figure>
-        </div>
+    <section id="amenities" aria-labelledby="amenities-title" className="border-t border-line py-10 md:py-12">
+      <SectionHeading id="amenities-title" title="Amenities" />
 
-        <div className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:col-span-8">
-          {property.amenityGroups.map((group) => (
-            <div key={group.title}>
-              <h3 className="eyebrow border-b border-ink pb-3 !font-sans !text-teal">{group.title}</h3>
-              <ul className="divide-y divide-line">
-                {group.items.map((item) => (
-                  <li key={item.label} className="py-3.5">
-                    <span className="font-serif text-[1.375rem] leading-snug text-ink">{item.label}</span>
-                    {item.note && <p className="mt-1 text-sm text-stone">{item.note}</p>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+      <div className="mt-6 grid gap-x-8 gap-y-8 sm:grid-cols-2">
+        {property.amenityGroups.map((group) => (
+          <div key={group.title}>
+            <h3 className="text-sm font-semibold tracking-normal text-muted">{group.title}</h3>
+            <ul className="mt-3 space-y-4">
+              {group.items.map((item) => (
+                <li key={item.label} className="flex gap-4">
+                  <Icon name={icons[item.label] ?? "home"} />
+                  <div>
+                    <span className="text-base">{item.label}</span>
+                    {item.note && <p className="mt-0.5 text-sm text-muted">{item.note}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   );

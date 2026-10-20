@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Icon } from "@/components/ui/Icon";
 import { track } from "@/lib/analytics";
 
 interface MapEmbedProps {
@@ -24,9 +25,9 @@ export function MapEmbed({ coordinates, mapsUrl, label }: MapEmbedProps) {
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => track("open_location", { provider: "google_maps" })}
-      className="link-underline inline-flex min-h-11 items-center gap-2 text-sm font-medium text-teal"
+      className="inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] font-semibold text-ink underline underline-offset-2"
     >
-      Open in Google Maps <span aria-hidden="true">↗</span>
+      Open in Google Maps <Icon name="arrowUpRight" className="size-4" />
       <span className="sr-only">(opens in a new tab)</span>
     </a>
   );
@@ -36,7 +37,7 @@ export function MapEmbed({ coordinates, mapsUrl, label }: MapEmbedProps) {
     const bbox = [coordinates.lng - d, coordinates.lat - d, coordinates.lng + d, coordinates.lat + d].join(",");
     return (
       <div>
-        <div className="relative aspect-[16/10] bg-mist">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-faint">
           <iframe
             title={`Map showing ${label}`}
             src={`https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${coordinates.lat},${coordinates.lng}`}
@@ -60,7 +61,7 @@ export function MapEmbed({ coordinates, mapsUrl, label }: MapEmbedProps) {
           setLoaded(true);
           track("open_location", { provider: "embed" });
         }}
-        className="link-underline min-h-11 text-sm font-medium text-ink"
+        className="min-h-11 text-[0.9375rem] font-semibold text-ink underline underline-offset-2"
       >
         Show map
       </button>

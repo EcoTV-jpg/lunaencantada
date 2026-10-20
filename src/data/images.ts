@@ -46,7 +46,7 @@ export const imageCategories: { id: ImageCategory; label: string }[] = [
   { id: "pool", label: "Pool" },
   { id: "beach", label: "Beach" },
   { id: "terrace", label: "Terrace" },
-  { id: "living", label: "Living & Dining" },
+  { id: "living", label: "Living & dining" },
   { id: "kitchen", label: "Kitchen" },
   { id: "bedrooms", label: "Bedrooms" },
   { id: "bathrooms", label: "Bathrooms" },
@@ -358,10 +358,13 @@ export const propertyImages: PropertyImage[] = [
  * photo appears twice on the page.
  */
 export const sectionImageIds = new Set([
-  "hero", // Hero
+  "hero", // Hero grid, main photo
+  "terrace", // Hero grid
+  "living-room", // Hero grid
+  "pool-courtyard", // Hero grid
+  "bedroom-king-closet", // Hero grid
   "open-plan-living", // The Condo
   "kitchen", // The Condo
-  "kitchen-island-teal", // Amenities
   "bedroom-king", // Bedroom 1
   "bedroom-queen", // Bedroom 2
   "bedroom-queen-2", // Bedroom 3

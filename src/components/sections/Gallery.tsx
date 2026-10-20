@@ -8,14 +8,11 @@ export function Gallery() {
   const categories = imageCategories.filter((c) => images.some((img) => img.category === c.id));
 
   return (
-    <section id="photos" aria-labelledby="photos-title" className="py-24 sm:py-32">
+    <section id="photos" aria-labelledby="photos-title" className="border-t border-line py-12 md:py-16">
       <div className="container-page">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <SectionHeading id="photos-title" eyebrow="Photos" title="The Condo in Photos" />
-          <p className="max-w-[24rem] text-stone">
-            The infinity pool and beach, the living spaces, all three bedrooms, the bathrooms and the private terrace.
-          </p>
-        </div>
+        <SectionHeading id="photos-title" title="The Condo in Photos">
+          <p>More of the living spaces, bedrooms, kitchen and terrace.</p>
+        </SectionHeading>
         <GalleryBrowser images={images} categories={categories} />
       </div>
     </section>

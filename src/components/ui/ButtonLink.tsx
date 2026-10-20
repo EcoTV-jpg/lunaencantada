@@ -1,14 +1,15 @@
 import type { ComponentProps } from "react";
 
-type Variant = "primary" | "secondary" | "light";
+type Variant = "primary" | "outline" | "inverse";
 
 const base =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-xs px-6 text-[0.9375rem] font-medium tracking-[0.01em] transition-colors duration-200";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-sm px-6 text-base font-semibold transition-colors duration-200";
 
 export const buttonStyles: Record<Variant, string> = {
-  primary: `${base} bg-teal text-paper hover:bg-teal-deep`,
-  secondary: `${base} border border-ink/25 text-ink hover:border-ink hover:bg-ink/[0.03]`,
-  light: `${base} bg-paper text-ink hover:bg-shell`,
+  // The single accent colour: one primary action per surface.
+  primary: `${base} bg-teal text-white hover:bg-teal-deep`,
+  outline: `${base} border border-ink text-ink hover:bg-faint`,
+  inverse: `${base} bg-ink text-white hover:bg-black`,
 };
 
 export function ButtonLink({

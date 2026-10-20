@@ -1,51 +1,55 @@
 import { property } from "@/data/property";
-import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Icon } from "@/components/ui/Icon";
 import { Photo } from "@/components/ui/Photo";
-import { formatAmount, numberWord } from "@/lib/format";
 import { resolveImage } from "@/lib/images";
 
+/**
+ * Listing-style hero: title row above a five-photo grid. On small screens
+ * the main photo leads edge to edge (visual order only — the H1 stays
+ * first in the DOM).
+ */
 export function Hero() {
-  const image = resolveImage("hero");
-  const { capacity, pricing } = property;
+  const main = resolveImage("hero");
+  const side = ["terrace", "living-room", "pool-courtyard", "bedroom-king-closet"].map(resolveImage);
+  const { address } = property;
 
   return (
-    <section aria-labelledby="hero-title" className="relative">
-      {/* Photo leads on small screens (visual order only; the H1 stays first in the DOM). */}
-      <div className="flex flex-col lg:grid lg:min-h-[min(calc(100svh-5rem),56rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)]">
-        <div className="container-page flex flex-col justify-center pt-10 pb-14 sm:pt-14 lg:mr-0 lg:max-w-none lg:py-20 lg:pr-16 lg:pl-[max(3.5rem,calc((100vw-84rem)/2+3.5rem))]">
-          <p className="eyebrow text-teal">Playa del Carmen · Mexico</p>
-
-          <h1 id="hero-title" className="mt-6 lg:mt-8">
-            <span className="block text-[3rem] leading-[0.95] sm:text-[4.25rem] xl:text-[5.25rem]">
-              {property.name}
-            </span>
+    <section aria-labelledby="hero-title" className="md:container-page md:pt-8">
+      <div className="flex flex-col">
+        <div className="container-page order-2 pt-6 md:order-none md:px-0 md:pt-0">
+          <h1 id="hero-title" className="text-[1.625rem] leading-tight md:text-[2rem]">
+            {property.name}
             <span className="sr-only"> — </span>
-            <span className="mt-4 block font-serif text-[1.5rem] leading-tight italic text-teal sm:text-[1.875rem] xl:text-[2.125rem]">
-              Beachfront Condo in Playa del Carmen
+            <span className="block text-muted md:inline md:text-ink">
+              <span aria-hidden="true" className="hidden md:inline"> — </span>Beachfront Condo in Playa del Carmen
             </span>
           </h1>
-
-          <p className="mt-8 max-w-[34rem] text-[1.0625rem] leading-relaxed text-stone sm:text-lg">
-            A {numberWord(capacity.bedrooms)}-bedroom beachfront condominium for up to{" "}
-            {numberWord(capacity.maxGuests)} guests, with a private ocean-view terrace, direct beach access and a
-            shared infinity pool in {property.address.area}, {property.address.city}.
-          </p>
-
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <ButtonLink href="#availability">Check Availability</ButtonLink>
-            <ButtonLink href="#photos" variant="secondary">
-              View Photos
-            </ButtonLink>
-          </div>
-
-          <p className="mt-6 text-sm text-stone">
-            From <span className="font-medium text-ink">{formatAmount(pricing.baseNightlyRate)}</span>{" "}
-            {pricing.baseNightlyRate.currency} / night
+          <p className="mt-2 flex items-center gap-1.5 text-[0.9375rem] text-ink">
+            <Icon name="pin" className="size-4" />
+            <span>
+              {address.area}, {address.city}, {address.state}, {address.country}
+            </span>
           </p>
         </div>
 
-        <div className="relative order-first aspect-[5/4] sm:aspect-[16/9] lg:order-none lg:aspect-auto">
-          <Photo image={image} sizes="(min-width: 1024px) 53vw, 100vw" preload />
+        <div className="relative order-1 md:order-none md:mt-6">
+          <div className="grid gap-2 md:h-[min(60vh,32rem)] md:grid-cols-4 md:grid-rows-2 md:overflow-hidden md:rounded-lg">
+            <div className="relative aspect-[4/3] md:col-span-2 md:row-span-2 md:aspect-auto">
+              <Photo image={main} sizes="(min-width: 768px) 50vw, 100vw" preload />
+            </div>
+            {side.map((img) => (
+              <div key={img.id} className="relative hidden md:block">
+                <Photo image={img} sizes="25vw" compact />
+              </div>
+            ))}
+          </div>
+          <a
+            href="#photos"
+            className="absolute right-4 bottom-4 inline-flex min-h-10 items-center gap-2 rounded-sm border border-ink bg-white px-4 text-sm font-semibold text-ink shadow-[var(--shadow-float)] transition-colors hover:bg-faint"
+          >
+            <Icon name="grid" className="size-4" />
+            Show all photos
+          </a>
         </div>
       </div>
     </section>

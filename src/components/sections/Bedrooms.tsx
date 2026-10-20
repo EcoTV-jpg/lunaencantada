@@ -5,68 +5,46 @@ import { numberWord } from "@/lib/format";
 import { resolveImage } from "@/lib/images";
 
 export function Bedrooms() {
-  const [first, ...rest] = property.bedrooms;
   const bathrooms = [resolveImage("bathroom"), resolveImage("bathroom-2")];
   const { capacity } = property;
 
   return (
-    <section id="bedrooms" aria-labelledby="bedrooms-title" className="py-24 sm:py-32">
-      <div className="container-page">
-        <SectionHeading id="bedrooms-title" eyebrow="Bedrooms & Bathrooms" title="Where You’ll Sleep">
-          <p>
-            {numberWord(capacity.bedrooms).replace(/^./, (c) => c.toUpperCase())} bedrooms with one bed each — a King
-            and two Queens — for up to {numberWord(capacity.maxGuests)} guests.
-          </p>
-        </SectionHeading>
+    <section id="bedrooms" aria-labelledby="bedrooms-title" className="border-t border-line py-10 md:py-12">
+      <SectionHeading id="bedrooms-title" title="Where You’ll Sleep" />
 
-        <div className="mt-16 grid gap-x-6 gap-y-12 md:grid-cols-12">
-          <article className="reveal md:col-span-7" aria-labelledby="bedroom-1">
-            <div className="relative aspect-[4/3] md:aspect-[7/6]">
-              <Photo image={resolveImage(first.imageId)} sizes="(min-width: 768px) 58vw, 100vw" />
+      <ul className="mt-6 grid gap-x-4 gap-y-8 sm:grid-cols-3">
+        {property.bedrooms.map((room) => (
+          <li key={room.name}>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-md">
+              <Photo image={resolveImage(room.imageId)} sizes="(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 100vw" compact />
             </div>
-            <BedroomCaption id="bedroom-1" name={first.name} bed={first.bed} />
-          </article>
+            <h3 className="mt-3 text-base tracking-normal">{room.name}</h3>
+            <p className="text-[0.9375rem] text-muted">1 {room.bed.toLowerCase()}</p>
+          </li>
+        ))}
+      </ul>
 
-          <div className="grid gap-y-12 sm:grid-cols-2 sm:gap-x-6 md:col-span-5 md:grid-cols-1">
-            {rest.map((room, i) => (
-              <article key={room.name} className="reveal" aria-labelledby={`bedroom-${i + 2}`}>
-                <div className="relative aspect-[4/3] md:aspect-[16/10]">
-                  <Photo image={resolveImage(room.imageId)} sizes="(min-width: 768px) 40vw, (min-width: 640px) 50vw, 100vw" />
-                </div>
-                <BedroomCaption id={`bedroom-${i + 2}`} name={room.name} bed={room.bed} />
-              </article>
-            ))}
-          </div>
+      <div className="mt-10 grid gap-x-4 gap-y-4 sm:grid-cols-3">
+        <div className="sm:pt-1">
+          <h3 className="text-base tracking-normal">Bathrooms</h3>
+          <p className="text-[0.9375rem] text-muted">
+            {property.name} has {numberWord(capacity.bathrooms)} bathrooms.
+          </p>
         </div>
-
-        <div className="mt-20 grid items-end gap-8 border-t border-line pt-12 md:grid-cols-12 md:gap-6">
-          <div className="md:col-span-5">
-            <h3 className="text-[2rem] leading-tight">Bathrooms</h3>
-            <p className="mt-3 max-w-[26rem] text-stone">
-              {property.name} has {numberWord(capacity.bathrooms)} bathrooms.
-            </p>
+        {/* Portrait source photos (~520px wide), kept at a modest size. */}
+        {bathrooms.map((bath) => (
+          <div key={bath.id} className="relative aspect-[3/4] overflow-hidden rounded-md max-sm:hidden">
+            <Photo image={bath} sizes="(min-width: 1024px) 19vw, 31vw" compact />
           </div>
-          {/* Source photos are portrait and ~520px wide, so they stay at a modest size. */}
-          <div className="grid grid-cols-2 gap-3 md:col-span-7 md:gap-4 lg:col-span-6 lg:col-start-7">
-            {bathrooms.map((bath) => (
-              <div key={bath.id} className="reveal relative aspect-[2/3]">
-                <Photo image={bath} sizes="(min-width: 1024px) 24vw, (min-width: 768px) 28vw, 50vw" />
-              </div>
-            ))}
-          </div>
+        ))}
+        <div className="grid grid-cols-2 gap-2 sm:hidden">
+          {bathrooms.map((bath) => (
+            <div key={bath.id} className="relative aspect-[3/4] overflow-hidden rounded-md">
+              <Photo image={bath} sizes="50vw" compact />
+            </div>
+          ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function BedroomCaption({ id, name, bed }: { id: string; name: string; bed: string }) {
-  return (
-    <div className="mt-5 flex items-baseline justify-between gap-4 border-b border-line pb-4">
-      <h3 id={id} className="text-[1.75rem] leading-none">
-        {name}
-      </h3>
-      <p className="eyebrow text-stone">{bed}</p>
-    </div>
   );
 }
