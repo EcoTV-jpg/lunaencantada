@@ -1,5 +1,6 @@
 import { property } from "@/data/property";
 import { Icon, type IconName } from "@/components/ui/Icon";
+import { minimumStayRange } from "@/lib/pricing";
 
 const { capacity, address, stay } = property;
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -7,7 +8,7 @@ const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 const highlights: { icon: IconName; title: string; text: string }[] = [
   { icon: "beach", title: "Beachfront", text: "Direct beach access from the condominium." },
   { icon: "pool", title: "Shared infinity pool", text: "Shared by the condominium — the pool is not private." },
-  { icon: "terrace", title: "Private ocean-view terrace", text: "A private terrace with an ocean view." },
+  { icon: "terrace", title: "Private balcony and oceanfront views", text: "A private balcony, in a condominium with oceanfront views." },
   { icon: "walk", title: "About 1 minute to Fifth Avenue", text: "Approximately a minute on foot." },
 ];
 
@@ -39,7 +40,10 @@ export function PropertyFacts() {
             <p className="font-semibold">
               Check-in {stay.checkIn} · Check-out {stay.checkOut}
             </p>
-            <p className="text-[0.9375rem] text-muted">No minimum stay is currently specified.</p>
+            <p className="text-[0.9375rem] text-muted">
+              {minimumStayRange() ? `Minimum stay ${minimumStayRange()}, depending on the season. ` : ""}
+              Long-term stays welcome.
+            </p>
           </div>
         </li>
       </ul>

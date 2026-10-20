@@ -20,8 +20,8 @@ export function CondoOverview() {
           one King bed and two Queen beds, with {numberWord(capacity.bathrooms)} bathrooms.
         </p>
         <p>
-          The private terrace looks out to the ocean. Inside, there is a fully equipped kitchen, a washer and dryer,
-          Wi-Fi and air conditioning. Step out to the beach directly from the condominium, or spend the afternoon at
+          The condo has oceanfront views and a private balcony. Inside, there is a fully equipped kitchen, a washer and
+          dryer, Wi-Fi and air conditioning. Step out to the beach directly from the condominium, or spend the afternoon at
           the shared infinity pool. Fifth Avenue is about a minute away on foot.
         </p>
       </div>

@@ -227,7 +227,7 @@ export function AvailabilityForm({ maxGuests }: { maxGuests: number }) {
             <div key={f}>{fieldError(f)}</div>
           ))}
           <p id={`${id}-guests-hint`} className="mt-2 text-xs text-muted">
-            Maximum {maxGuests} guests, including children.
+            Maximum {maxGuests} guests, including children under 12 and babies.
           </p>
         </fieldset>
 

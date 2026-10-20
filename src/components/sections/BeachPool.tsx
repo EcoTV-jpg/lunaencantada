@@ -16,8 +16,8 @@ const points: { icon: IconName; title: string; text: string }[] = [
   },
   {
     icon: "terrace",
-    title: "Private ocean-view terrace",
-    text: "Your own terrace, looking out to the ocean, for morning coffee or the end of the day.",
+    title: "Private balcony and oceanfront views",
+    text: "Your own balcony for morning coffee or the end of the day, in a condominium with oceanfront views.",
   },
 ];
 
@@ -28,7 +28,7 @@ export function BeachPool() {
   return (
     <section id="beach" aria-labelledby="beach-title" className="border-t border-line py-10 md:py-12">
       <SectionHeading id="beach-title" title="Beachfront Living">
-        <p>Direct access to the beach, a shared infinity pool, and the ocean in view from your own terrace.</p>
+        <p>Direct access to the beach, a shared infinity pool, oceanfront views and your own private balcony.</p>
       </SectionHeading>
 
       <div className="mt-6 grid grid-cols-2 gap-2">

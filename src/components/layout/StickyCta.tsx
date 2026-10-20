@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
  * aside while the hero, the booking card or the final call to action is
  * on screen.
  */
-export function StickyCta({ priceLabel, currency }: { priceLabel: string; currency: string }) {
+export function StickyCta({ priceLabel, currency }: { priceLabel: string | null; currency: string }) {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
@@ -35,7 +35,13 @@ export function StickyCta({ priceLabel, currency }: { priceLabel: string; curren
     >
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-4">
         <p className="text-sm text-muted">
-          <span className="text-base font-semibold text-ink">From {priceLabel}</span> {currency} / night
+          {priceLabel ? (
+            <>
+              <span className="text-base font-semibold text-ink">From {priceLabel}</span> {currency} / night
+            </>
+          ) : (
+            <span className="text-base font-semibold text-ink">Rates on request</span>
+          )}
         </p>
         <a
           href="#availability"

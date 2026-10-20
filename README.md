@@ -82,15 +82,15 @@ The default provider never fabricates availability: `checkAvailability` returns 
 
 ## Open items to confirm with the owner
 
+Rates, rules, fees and amenities follow the official property information (October 2026) in `src/data/property.ts`. Seasonal rates live in `pricing.seasons`. The page regenerates daily, so past seasons drop off and the "From" price updates on its own.
+
 These are `TODO`s in the code. The public UI leaves out anything that isn't confirmed.
 
 - Final domain (`NEXT_PUBLIC_SITE_URL`)
 - Where inquiries go (`INQUIRY_WEBHOOK_URL`) and public contact details (`property.contact`)
 - Exact coordinates. The map pin (`property.mapLocation`) comes from OpenStreetMap and needs confirming. Once confirmed, also set `property.coordinates`, which enables `VacationRental` structured data.
-- Taxes, security deposit, cancellation/refund policy, payment methods
-- Smoking and parties/events rules
-- Cleaning: the policy for exactly 5-day stays and stays over 6 days, and whether the MXN $600 charge is optional
-- Kitchen appliances, if they should be listed individually
+- Monthly rate for long-term stays (none shown); whether the $500 security deposit is refundable and when it is collected; cancellation/refund policy; payment methods
+- Washer and dryer: not in the official amenity list, kept until confirmed
 - Legal pages: Rental Terms, Cancellation Policy, Privacy Policy (`legalPages` in `site.ts`). The privacy policy matters because the form collects names and emails.
 - Written permission for the Latitud 20 photography (or the photographer's high-resolution originals), plus the photo questions in `docs/photo-inventory.md`
 - Verified guest reviews

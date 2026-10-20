@@ -15,6 +15,8 @@ import type { CurrencyCode, Money } from "@/lib/booking/types";
 export interface Bedroom {
   name: string;
   bed: string;
+  /** Guests the room sleeps. */
+  sleeps: number;
   imageId: string;
 }
 
@@ -29,6 +31,16 @@ export interface NearbyPlace {
   kind: string;
   /** Only approved distances. `null` when no distance is confirmed. */
   distance: string | null;
+}
+
+/** A rate season. Dates are inclusive, `YYYY-MM-DD`. */
+export interface RateSeason {
+  start: string;
+  end: string;
+  nightly: number;
+  /** `null` when no weekly rate is offered for the season. */
+  weekly: number | null;
+  minNights: number;
 }
 
 export interface CleaningRule {
@@ -68,6 +80,8 @@ export const property = {
 
   capacity: {
     maxGuests: 6,
+    // Maximum occupancy counts everyone.
+    occupancyNote: "including children under 12 and babies",
     bedrooms: 3,
     bathrooms: 2,
     beds: 3,
@@ -75,9 +89,9 @@ export const property = {
   },
 
   bedrooms: [
-    { name: "Bedroom 1", bed: "King bed", imageId: "bedroom-king" },
-    { name: "Bedroom 2", bed: "Queen bed", imageId: "bedroom-queen" },
-    { name: "Bedroom 3", bed: "Queen bed", imageId: "bedroom-queen-2" },
+    { name: "Master Room", bed: "King bed", sleeps: 2, imageId: "bedroom-king" },
+    { name: "Guest Bedroom 1", bed: "Queen bed", sleeps: 2, imageId: "bedroom-queen" },
+    { name: "Guest Bedroom 2", bed: "Queen bed", sleeps: 2, imageId: "bedroom-queen-2" },
   ] satisfies readonly Bedroom[],
 
   features: {
@@ -85,7 +99,7 @@ export const property = {
     directBeachAccess: true,
     oceanView: true,
     pool: { type: "Infinity pool", shared: true, private: false },
-    terrace: "Private terrace with ocean view",
+    balcony: "Private balcony",
   },
 
   amenityGroups: [
@@ -94,59 +108,103 @@ export const property = {
       items: [
         { label: "Wi-Fi" },
         { label: "Air conditioning" },
+        { label: "Ceiling fan" },
+        { label: "TV" },
+        // TODO(owner): washer and dryer are not in the official amenity list — confirm keep or remove.
         { label: "Washer" },
         { label: "Dryer" },
+        { label: "Safe" },
+        { label: "Furnished" },
+      ],
+    },
+    {
+      title: "Bedroom & bathroom",
+      items: [
+        { label: "Linens" },
+        { label: "Hangers" },
+        { label: "Hair dryer" },
+        { label: "Iron" },
+        { label: "Ironing board" },
+        { label: "Small toiletries to get you started" },
+        { label: "Beach towels" },
       ],
     },
     {
       title: "Kitchen",
-      // TODO(owner): list individual appliances only once confirmed.
-      items: [{ label: "Fully equipped kitchen" }],
+      items: [
+        { label: "Fully equipped kitchen" },
+        { label: "Refrigerator" },
+        { label: "Oven" },
+        { label: "Cooktop" },
+        { label: "Microwave" },
+        { label: "Coffee maker" },
+        { label: "Hot water kettle" },
+        { label: "Blender" },
+        { label: "Toaster" },
+        { label: "Bottled water" },
+      ],
     },
     {
       title: "Outdoor",
       items: [
-        { label: "Direct beach access" },
-        { label: "Private ocean-view terrace" },
+        { label: "Beachfront with direct beach access" },
+        { label: "Oceanfront views" },
+        { label: "Private balcony" },
         { label: "Shared infinity pool" },
+        { label: "Garden" },
       ],
     },
     {
-      title: "Building",
+      title: "Building & parking",
       items: [
+        { label: "24-hour building security" },
         {
-          label: "Elevator",
+          label: "Elevator in building",
           note: "The elevator may occasionally be unavailable during maintenance.",
         },
-        { label: "Secure on-property parking" },
-        { label: "24-hour security" },
+        { label: "Free parking garage on premises" },
+        { label: "Paid parking nearby" },
+        { label: "Luggage drop-off allowed" },
       ],
     },
   ] satisfies readonly AmenityGroup[],
 
   stay: {
-    checkIn: "3:00 PM",
+    checkIn: "4:00 PM",
     checkOut: "11:00 AM",
     // Same times in 24h ISO form, for structured data.
-    checkInTime: "15:00",
+    checkInTime: "16:00",
     checkOutTime: "11:00",
-    // Minimum stay: none.
-    minimumNights: null as number | null,
+    // Minimum stay varies by season — see `pricing.seasons`.
+    longTermStays: true,
     petsAllowed: false,
-    // TODO(owner): confirm smoking policy.
-    smokingAllowed: null as boolean | null,
-    // TODO(owner): confirm parties/events policy.
-    eventsAllowed: null as boolean | null,
+    smokingAllowed: false as boolean | null,
+    smokingNote: "No smoking, vaping or e-cigarettes in the condo or common areas (avoid extra charges).",
+    eventsAllowed: false as boolean | null,
+    quietHours: "11:00 PM – 8:00 AM",
   },
 
   pricing: {
-    // Base rate shown as "From …". Dynamic pricing may replace it later,
-    // so never present it as a fixed or guaranteed price.
-    baseNightlyRate: { amount: 250, currency: "USD" as CurrencyCode },
-    // TODO(owner): confirm taxes (and whether they are included).
-    taxes: null,
-    // TODO(owner): confirm security deposit.
-    securityDeposit: null,
+    currency: "USD" as CurrencyCode,
+    // Seasonal rates (USD). Past seasons drop off the site automatically.
+    seasons: [
+      { start: "2026-08-06", end: "2026-10-31", nightly: 250, weekly: 1750, minNights: 2 },
+      { start: "2026-11-01", end: "2026-12-18", nightly: 380, weekly: 2660, minNights: 3 },
+      { start: "2026-12-19", end: "2027-01-03", nightly: 800, weekly: null, minNights: 7 },
+      { start: "2027-01-04", end: "2027-05-31", nightly: 400, weekly: 2800, minNights: 3 },
+    ] satisfies readonly RateSeason[],
+    // After the last season the site shows "Rates on request".
+    // TODO(owner): monthly rate for long-term stays — not provided; none shown.
+    monthlyRate: null as number | null,
+    // "All rates in USD and subject to 16% VAT."
+    taxes: [{ name: "VAT", rate: 0.16, includedInRate: false }],
+    // "A security deposit of $500 USD may apply."
+    // TODO(owner): confirm whether it is refundable and when it is collected.
+    securityDeposit: {
+      amount: { amount: 500, currency: "USD" as CurrencyCode },
+      note: "A security deposit of $500 USD may apply.",
+      refundable: null as boolean | null,
+    },
     // TODO(owner): confirm cancellation and refund policies.
     cancellationPolicy: null,
     refundPolicy: null,
@@ -155,22 +213,27 @@ export const property = {
   },
 
   cleaning: {
+    fee: { amount: 150, currency: "USD" as CurrencyCode },
     rules: [
       {
-        label: "6-day stays",
-        description: "Complimentary cleaning on day 4.",
+        label: "Cleaning fee",
+        description: "$150 USD per stay, including maid service every third day (excluding Sundays and holidays).",
+        fee: { amount: 150, currency: "USD" },
+        complimentary: false,
+      },
+      {
+        label: "Stays of 7 days or longer",
+        description: "Towels and linens are changed once per week at no extra cost.",
         fee: null,
         complimentary: true,
       },
       {
-        label: "Stays under 5 days",
-        description: "A cleaning charge of MXN $600 applies.",
-        fee: { amount: 600, currency: "MXN" },
+        label: "Extra cleaning",
+        description: "Available on request for an additional fee.",
+        fee: null,
         complimentary: false,
       },
     ] satisfies readonly CleaningRule[],
-    // TODO(owner): confirm the cleaning policy for exactly 5-day stays,
-    // stays longer than 6 days, and whether the MXN $600 charge is optional.
   },
 
   location: {

@@ -1,11 +1,12 @@
 import { property } from "@/data/property";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Photo } from "@/components/ui/Photo";
-import { formatAmount } from "@/lib/format";
+import { formatUsd, fromNightlyRate } from "@/lib/pricing";
 import { resolveImage } from "@/lib/images";
 
 export function FinalCta() {
   const image = resolveImage("garden-fountain");
+  const fromRate = fromNightlyRate();
   return (
     <section aria-labelledby="final-cta-title" className="bg-faint py-12 md:py-16">
       <div className="container-page">
@@ -21,9 +22,14 @@ export function FinalCta() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <ButtonLink href="#availability">Check availability</ButtonLink>
               <p className="text-sm text-muted">
-                From{" "}
-                <span className="font-semibold text-ink">{formatAmount(property.pricing.baseNightlyRate)}</span>{" "}
-                {property.pricing.baseNightlyRate.currency} / night
+                {fromRate === null ? (
+                  <span className="font-semibold text-ink">Rates on request</span>
+                ) : (
+                  <>
+                    From <span className="font-semibold text-ink">{formatUsd(fromRate)}</span> {property.pricing.currency}{" "}
+                    / night
+                  </>
+                )}
               </p>
             </div>
           </div>

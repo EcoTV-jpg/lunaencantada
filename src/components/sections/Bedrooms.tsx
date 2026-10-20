@@ -19,7 +19,9 @@ export function Bedrooms() {
               <Photo image={resolveImage(room.imageId)} sizes="(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 100vw" compact />
             </div>
             <h3 className="mt-3 text-base tracking-normal">{room.name}</h3>
-            <p className="text-[0.9375rem] text-muted">1 {room.bed.toLowerCase()}</p>
+            <p className="text-[0.9375rem] text-muted">
+              1 {room.bed.toLowerCase()} · {room.sleeps} guests
+            </p>
           </li>
         ))}
       </ul>

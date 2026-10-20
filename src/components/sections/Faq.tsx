@@ -1,4 +1,4 @@
-import { faq } from "@/data/faq";
+import { getFaq } from "@/data/faq";
 import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -18,7 +18,7 @@ export function Faq() {
         </SectionHeading>
 
         <div className="divide-y divide-line border-y border-line">
-          {faq.map((item) => (
+          {getFaq().map((item) => (
             <details key={item.question} className="faq-item group">
               <summary className="flex min-h-14 cursor-pointer items-center justify-between gap-6 py-4 text-left">
                 <h3 className="text-base font-medium tracking-normal">{item.question}</h3>

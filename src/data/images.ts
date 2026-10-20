@@ -45,7 +45,7 @@ export interface PropertyImage {
 export const imageCategories: { id: ImageCategory; label: string }[] = [
   { id: "pool", label: "Pool" },
   { id: "beach", label: "Beach" },
-  { id: "terrace", label: "Terrace" },
+  { id: "terrace", label: "Balcony" },
   { id: "living", label: "Living & dining" },
   { id: "kitchen", label: "Kitchen" },
   { id: "bedrooms", label: "Bedrooms" },
@@ -97,7 +97,7 @@ export const propertyImages: PropertyImage[] = [
     alt: "Bedroom with a large dark-wood bed, two table lamps and a painting of trees above the headboard",
     category: "bedrooms",
     tone: "interior",
-    caption: "Bedroom 1 · King bed",
+    caption: "Master Room · King bed",
     source: `${LAT20}-8.jpg`,
     sourceSize: [1160, 768],
   },
@@ -114,17 +114,17 @@ export const propertyImages: PropertyImage[] = [
   {
     id: "terrace",
     src: img("terrace"),
-    alt: "Covered terrace with a wooden dining table and cushioned chairs, overlooking the pool and courtyard",
+    alt: "Covered balcony with a wooden dining table and cushioned chairs, overlooking the pool and courtyard",
     category: "terrace",
     tone: "sand",
-    caption: "Private terrace",
+    caption: "Private balcony",
     source: `${LAT20}-mexico-7.jpg`,
     sourceSize: [1184, 788],
   },
   {
     id: "living-room",
     src: img("living-room"),
-    alt: "Living room with a navy sectional sofa and wooden coffee table beside sliding doors to the terrace",
+    alt: "Living room with a navy sectional sofa and wooden coffee table beside sliding doors to the balcony",
     category: "living",
     tone: "interior",
     caption: "Living room",
@@ -147,7 +147,7 @@ export const propertyImages: PropertyImage[] = [
     alt: "Bedroom with an upholstered bed, a mint-green feature wall, a flower painting and a woven bench",
     category: "bedrooms",
     tone: "interior",
-    caption: "Bedroom 2 · Queen bed",
+    caption: "Guest Bedroom 1 · Queen bed",
     source: `${LAT20}-3.jpg`,
     sourceSize: [1135, 757],
   },
@@ -167,7 +167,7 @@ export const propertyImages: PropertyImage[] = [
     alt: "Bedroom with an upholstered bed, light blue wall, wooden nightstands and a red tree painting",
     category: "bedrooms",
     tone: "interior",
-    caption: "Bedroom 3 · Queen bed",
+    caption: "Guest Bedroom 2 · Queen bed",
     source: `${LAT20}-mexico-4.jpg`,
     sourceSize: [1156, 768],
   },
@@ -204,10 +204,10 @@ export const propertyImages: PropertyImage[] = [
   {
     id: "terrace-lounger",
     src: img("terrace-lounger"),
-    alt: "Terrace with a cushioned lounger, a side table and a folding chair, overlooking the courtyard buildings",
+    alt: "Balcony with a cushioned lounger, a side table and a folding chair, overlooking the courtyard buildings",
     category: "terrace",
     tone: "sand",
-    caption: "Terrace",
+    caption: "Balcony",
     source: `${LAT20}-mexico-luna-encantada-lunaencantada-2.jpg`,
     sourceSize: [1182, 787],
   },
@@ -227,7 +227,7 @@ export const propertyImages: PropertyImage[] = [
     alt: "Bedroom with a dark-wood bed, air-conditioning unit and wooden closet doors",
     category: "bedrooms",
     tone: "interior",
-    caption: "Bedroom 1 · King bed",
+    caption: "Master Room · King bed",
     source: `${LAT20}-mexico-luna-encantada-airbnb-vrbo-8.jpg`,
     sourceSize: [1179, 787],
   },
@@ -257,7 +257,7 @@ export const propertyImages: PropertyImage[] = [
     alt: "Bedroom with a cushioned window seat and a woven bench at the foot of the bed",
     category: "bedrooms",
     tone: "interior",
-    caption: "Bedroom 2 · Queen bed",
+    caption: "Guest Bedroom 1 · Queen bed",
     source: `${LAT20}-mexico-luna-encantada-airbnb-vrbo-7.jpg`,
     sourceSize: [1180, 784],
   },
@@ -274,7 +274,7 @@ export const propertyImages: PropertyImage[] = [
   {
     id: "bedroom-terrace-door",
     src: img("bedroom-terrace-door"),
-    alt: "Bedroom with a TV on a wooden console, two armchairs and sliding doors to a terrace",
+    alt: "Bedroom with a TV on a wooden console, two armchairs and sliding doors to a balcony",
     category: "bedrooms",
     tone: "interior",
     caption: "Bedroom",
@@ -304,17 +304,17 @@ export const propertyImages: PropertyImage[] = [
   {
     id: "terrace-table",
     src: img("terrace-table"),
-    alt: "Terrace with a wooden table and blue-cushioned folding chairs beside the sliding doors",
+    alt: "Balcony with a wooden table and blue-cushioned folding chairs beside the sliding doors",
     category: "terrace",
     tone: "sand",
-    caption: "Terrace",
+    caption: "Balcony",
     source: `${LAT20}-mexico-luna-encantada-lunaencantada-5.jpg`,
     sourceSize: [1183, 788],
   },
   {
     id: "entry-living",
     src: img("entry-living"),
-    alt: "Console table with two wooden stools, looking across the living and dining area to the terrace",
+    alt: "Console table with two wooden stools, looking across the living and dining area to the balcony",
     category: "living",
     tone: "interior",
     caption: "Entrance and living area",
@@ -365,9 +365,9 @@ export const sectionImageIds = new Set([
   "bedroom-king-closet", // Hero grid
   "open-plan-living", // The Condo
   "kitchen", // The Condo
-  "bedroom-king", // Bedroom 1
-  "bedroom-queen", // Bedroom 2
-  "bedroom-queen-2", // Bedroom 3
+  "bedroom-king", // Master Room
+  "bedroom-queen", // Guest Bedroom 1
+  "bedroom-queen-2", // Guest Bedroom 2
   "bathroom", // Bathrooms
   "bathroom-2", // Bathrooms
   "infinity-pool", // Beach & Pool

@@ -18,11 +18,15 @@ import { Nearby } from "@/components/sections/Nearby";
 import { PropertyFacts } from "@/components/sections/PropertyFacts";
 import { Reviews } from "@/components/sections/Reviews";
 import { property } from "@/data/property";
-import { formatAmount } from "@/lib/format";
+import { formatUsd, fromNightlyRate } from "@/lib/pricing";
 import { buildStructuredData } from "@/lib/structured-data";
+
+/** Regenerate daily so the seasonal "From" price and rate table stay current. */
+export const revalidate = 86400;
 
 export default function HomePage() {
   const jsonLd = buildStructuredData();
+  const fromRate = fromNightlyRate();
 
   return (
     <>
@@ -61,10 +65,7 @@ export default function HomePage() {
         <FinalCta />
       </main>
       <Footer />
-      <StickyCta
-        priceLabel={formatAmount(property.pricing.baseNightlyRate)}
-        currency={property.pricing.baseNightlyRate.currency}
-      />
+      <StickyCta priceLabel={fromRate === null ? null : formatUsd(fromRate)} currency={property.pricing.currency} />
       <AnalyticsListener />
       <script
         type="application/ld+json"

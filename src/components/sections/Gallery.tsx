@@ -11,7 +11,7 @@ export function Gallery() {
     <section id="photos" aria-labelledby="photos-title" className="border-t border-line py-12 md:py-16">
       <div className="container-page">
         <SectionHeading id="photos-title" title="The Condo in Photos">
-          <p>More of the living spaces, bedrooms, kitchen and terrace.</p>
+          <p>More of the living spaces, bedrooms, kitchen and balcony.</p>
         </SectionHeading>
         <GalleryBrowser images={images} categories={categories} />
       </div>
