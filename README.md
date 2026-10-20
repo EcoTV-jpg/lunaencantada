@@ -30,6 +30,7 @@ Copy `.env.example` to `.env.local` and fill in the values.
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin (e.g. `https://example.com`). Used for canonical, Open Graph, sitemap, robots and JSON-LD. **Required before launch.** |
 | `INQUIRY_WEBHOOK_URL` | Endpoint that receives availability inquiries as a JSON `POST`. Without it, inquiries are logged in development and **refused in production**. |
 | `INQUIRY_WEBHOOK_SECRET` | Optional; sent as the `X-Inquiry-Secret` header. |
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox public token (`pk.…`) for the Location map. It's inlined into the client bundle at build time, so set it in the hosting environment **before building**. Restrict it to the site's URLs in the Mapbox account. Without it, the map shows the address with a Google Maps link. |
 
 ## Where things live
 
@@ -85,7 +86,7 @@ These are `TODO`s in the code. The public UI leaves out anything that isn't conf
 
 - Final domain (`NEXT_PUBLIC_SITE_URL`)
 - Where inquiries go (`INQUIRY_WEBHOOK_URL`) and public contact details (`property.contact`)
-- Exact coordinates. Setting them enables the on-demand map and `VacationRental` structured data (that also needs at least 8 real photos).
+- Exact coordinates. The map pin (`property.mapLocation`) comes from OpenStreetMap and needs confirming. Once confirmed, also set `property.coordinates`, which enables `VacationRental` structured data.
 - Taxes, security deposit, cancellation/refund policy, payment methods
 - Smoking and parties/events rules
 - Cleaning: the policy for exactly 5-day stays and stays over 6 days, and whether the MXN $600 charge is optional

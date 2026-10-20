@@ -59,6 +59,13 @@ export const property = {
   // and VacationRental structured data. Never approximate.
   coordinates: null as { lat: number; lng: number } | null,
 
+  // Pin for the Location map only — deliberately separate from the verified
+  // `coordinates` above, so structured data is unaffected.
+  // Source: OpenStreetMap node 920559343, "Luna Encantada", Calle 6 Norte,
+  // Centro (OSM check_date 2026-08-21). OSM lists postcode 77720.
+  // TODO(owner): confirm the pin; once confirmed, also set `coordinates`.
+  mapLocation: { lat: 20.6245631, lng: -87.0729426 },
+
   capacity: {
     maxGuests: 6,
     bedrooms: 3,

@@ -201,3 +201,74 @@ dialog.lightbox::backdrop {
     block-size: auto;
   }
 }
+
+/* ------------------------------------------------------------------
+   Mapbox — align controls, pin and popup with the design system.
+   The Mapbox logo and attribution are left visible (required).
+   ------------------------------------------------------------------ */
+.map-pin {
+  display: block;
+  width: 32px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.3));
+  transition: transform 150ms var(--ease-calm);
+}
+.map-pin:hover {
+  transform: translateY(-2px);
+}
+.map-pin:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+:root .mapboxgl-map {
+  font-family: var(--font-sans);
+}
+:root .mapboxgl-popup-content {
+  border-radius: var(--radius-md);
+  padding: 12px 36px 12px 16px;
+  box-shadow: var(--shadow-card);
+}
+:root .mapboxgl-popup-close-button {
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  border-radius: 9999px;
+  color: var(--color-ink);
+}
+.map-popup-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+}
+.map-popup-address {
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+:root .mapboxgl-ctrl-group {
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-float) !important;
+}
+:root .mapboxgl-ctrl-group button {
+  width: 36px !important;
+  height: 36px !important;
+}
+:root .mapboxgl-canvas:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: -2px;
+}
+/* Keep the required logo and attribution side by side, never overlapping:
+   the attribution wraps beside the logo on narrow maps. */
+:root .mapboxgl-ctrl-bottom-right {
+  max-width: calc(100% - 104px);
+}
+:root .mapboxgl-ctrl-attrib {
+  white-space: normal;
+  text-align: right;
+}

@@ -1,16 +1,16 @@
-import { fullAddress, property } from "@/data/property";
+import { property } from "@/data/property";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Photo } from "@/components/ui/Photo";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { resolveImage } from "@/lib/images";
-import { MapEmbed } from "./MapEmbed";
+import { LocationMap } from "./LocationMap";
 
 export function Location() {
-  const { address, location, coordinates } = property;
+  const { address, location, mapLocation } = property;
   const building = resolveImage("building");
-  const mapsUrl = coordinates
-    ? `https://www.google.com/maps/search/?api=1&query=${coordinates.lat},${coordinates.lng}`
-    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+  const pin = `${mapLocation.lat},${mapLocation.lng}`;
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${pin}`;
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pin}`;
 
   const facts: { icon: IconName; label: string; value: string }[] = [
     { icon: "beach", label: "Beach", value: location.beach },
@@ -46,9 +46,6 @@ export function Location() {
                 {address.country}
               </span>
             </address>
-            <div className="mt-3">
-              <MapEmbed coordinates={coordinates} mapsUrl={mapsUrl} label={fullAddress} />
-            </div>
 
             <dl className="mt-6 space-y-5 border-t border-line pt-6">
               {facts.map((fact) => (
@@ -62,6 +59,21 @@ export function Location() {
               ))}
             </dl>
           </div>
+        </div>
+
+        <div className="mt-10">
+          <LocationMap
+            lat={mapLocation.lat}
+            lng={mapLocation.lng}
+            name={property.name}
+            addressLines={[
+              `${address.street}, ${address.area}`,
+              `${address.postalCode} ${address.city}, ${address.state}`,
+              address.country,
+            ]}
+            googleMapsUrl={googleMapsUrl}
+            directionsUrl={directionsUrl}
+          />
         </div>
       </div>
     </section>
