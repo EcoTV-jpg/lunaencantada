@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens — white-canvas, photograph-first, one teal accent.
+   The interface stays near-monochrome; photography carries the colour.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #222222; /* Primary text, headings, icons, inverse surfaces */
+  --color-muted: #6a6a6a; /* Secondary text, metadata (5.4:1 on white) */
+  --color-grey: #c1c1c1; /* Placeholder text, disabled strokes */
+  --color-line: #ebebeb; /* Hairlines, dividers */
+  --color-deco: #dddddd; /* Field borders, skeleton surfaces */
+  --color-faint: #f7f7f7; /* Canvas for alternate sections, hover fills */
+  --color-white: #ffffff;
+  --color-teal: #2e7777; /* The single accent: primary actions, brand mark */
+  --color-teal-deep: #235f5f; /* Hover / pressed */
+  --color-error: #c13515;
+
+  --font-sans: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-sm: 8px; /* Inputs, buttons */
+  --radius-md: 12px; /* Photos, cards */
+  --radius-lg: 16px; /* Large photo frames, booking card */
+
+  --shadow-float: 0 0 0 1px rgb(0 0 0 / 0.02), 0 2px 6px rgb(0 0 0 / 0.04), 0 4px 8px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 6px 16px rgb(0 0 0 / 0.12);
+  --shadow-overlay: 0 8px 28px rgb(0 0 0 / 0.28);
+
+  --ease-calm: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-white);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: rgb(46 119 119 / 0.18);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-white);
+  }
+
+  input[type="date"] {
+    font-variant-numeric: tabular-nums;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.55;
+    cursor: pointer;
+  }
+
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Utilities
+   ------------------------------------------------------------------ */
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 5rem;
+  }
+}
+
+/* Section title: compact, confident, tight tracking. */
+@utility title-section {
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  @media (width >= 48rem) {
+    font-size: 1.625rem;
+  }
+}
+
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  &:hover {
+    color: var(--color-ink);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion — restrained, CSS-only, never hides content when unsupported
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Lightbox dialog */
+dialog.lightbox {
+  max-width: 100vw;
+  max-height: 100dvh;
+}
+dialog.lightbox::backdrop {
+  background: rgb(0 0 0 / 0.9);
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.lightbox[open] {
+    animation: fade-in 200ms var(--ease-calm);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* FAQ accordion: animate the answer height where supported. */
+@supports (interpolate-size: allow-keywords) {
+  .faq-item {
+    interpolate-size: allow-keywords;
+  }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 240ms var(--ease-calm),
+      content-visibility 240ms allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Mapbox — align controls, pin and popup with the design system.
+   The Mapbox logo and attribution are left visible (required).
+   ------------------------------------------------------------------ */
+.map-pin {
+  display: block;
+  width: 32px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.3));
+  transition: transform 150ms var(--ease-calm);
+}
+.map-pin:hover {
+  transform: translateY(-2px);
+}
+.map-pin:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+:root .mapboxgl-map {
+  font-family: var(--font-sans);
+}
+:root .mapboxgl-popup-content {
+  border-radius: var(--radius-md);
+  padding: 12px 36px 12px 16px;
+  box-shadow: var(--shadow-card);
+}
+:root .mapboxgl-popup-close-button {
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  border-radius: 9999px;
+  color: var(--color-ink);
+}
+.map-popup-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+}
+.map-popup-address {
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+:root .mapboxgl-ctrl-group {
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-float) !important;
+}
+:root .mapboxgl-ctrl-group button {
+  width: 36px !important;
+  height: 36px !important;
+}
+:root .mapboxgl-canvas:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: -2px;
+}
+/* Keep the required logo and attribution side by side, never overlapping:
+   the attribution wraps beside the logo on narrow maps. */
+:root .mapboxgl-ctrl-bottom-right {
+  max-width: calc(100% - 104px);
+}
+:root .mapboxgl-ctrl-attrib {
+  white-space: normal;
+  text-align: right;
+}
